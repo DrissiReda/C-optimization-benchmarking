@@ -1,25 +1,29 @@
 EXEC=subject10
 CC=gcc
-FLAGS= -Wall -g -funroll-loops -march=native
+FLAGS= -Wall -g -funroll-loops -march=skylake -msse4
 SRC=subject10 rdtsc main
 OBJ=rdtsc.o subject10.o main.o
-2opt: 
+clean:
+	rm -f *.o
+	rm -f O*
+Og:
+	$(CC) $(FLAGS) -c subject10.c
+	$(CC) $(FLAGS) -c rdtsc.c
+	$(CC) $(FLAGS) -c main.c
+	$(CC) $(OBJ) -o Og
+O2: 
 	$(CC) $(FLAGS) -O2 -c subject10.c
 	$(CC) $(FLAGS) -O2 -c rdtsc.c
 	$(CC) $(FLAGS) -O2 -c main.c
-	$(CC) $(OBJ) -o $(EXEC)O2
-3opt:
+	$(CC) $(OBJ) -o O2
+O3:
 	$(CC) $(FLAGS) -O3 -c subject10.c
 	$(CC) $(FLAGS) -O3 -c main.c
 	$(CC) $(FLAGS) -O2 -c rdtsc.c
-	$(CC) $(OBJ) -o $(EXEC)O3
+	$(CC) $(OBJ) -o O3
 
-fast: 
+Ofast: 
 	$(CC) $(FLAGS) -Ofast -c subject10.c
 	$(CC) $(FLAGS) -Ofast -c rdtsc.c
 	$(CC) $(FLAGS) -Ofast -c main.c
-	$(CC) $(OBJ) -o $(EXEC)Ofast
-clean:
-	rm -f *.o
-	rm -f $(EXEC)O*
-
+	$(CC) $(OBJ) -o Ofast
