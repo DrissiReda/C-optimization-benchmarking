@@ -68,13 +68,12 @@ plot_NBRUN() {
 
 mkdir -p warm_plot
 mkdir -p meta_plot 
-mkdir -p bin
 mkdir -p cqa
 
 TODO=$(tail +9 Makefile | grep : | cut -d : -f 1)
 
 
-touch res.csv
+echo '' > res.csv
 
 echo - START TEST -
 
@@ -109,9 +108,6 @@ for i in $TODO ; do
 	
 done
 
-mv *.tsv warm_plot/
-
-
 echo  - PLOTING -
 
 if ${PLOT_ESTIMATE} ; then
@@ -130,7 +126,7 @@ plot_tsv meta_plot
 echo - CQA PASS -
 
 for i in $(ls O*) ; do
-	maqao cqa fct-loops=baseline conf=all --output-format=html --output-path=cqa/cqa_$i $i
+	maqao cqa fct-loops=baseline conf=all --output-format=html --output-path=cqa/cqa_$i ./$i
 done
 
 echo - DONE - 

@@ -14,14 +14,14 @@ int main(int argc, char* argv[])
     int warm=atoi(argv[1]);
     int rept=atoi(argv[2]);
     double** a=calloc(1,size*sizeof(a[0]));
-    char name[9];
+    char name[20];
     FILE* output=0;
     unsigned long long start=0,end=0;
     int i;
     for(i=0; i<size; i++)
         a[i]=calloc(1,size*sizeof(a[i][0]));
 
-    sprintf(name,"%s.tsv",argv[0]);
+    sprintf(name,"warm_plot/%s.tsv",argv[0]);
     output=fopen(name,"w+");
 
     //warmup
