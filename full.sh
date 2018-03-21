@@ -2,10 +2,10 @@
 
 #SET RUN PARAM HERE
 
-META=27
-WARM=90000
-NB_RUN=5000
-DATA_SIZE=90
+META=70
+WARM=200000
+NB_RUN=20
+DATA_SIZE=20
 
 PLOT_ESTIMATE=false
 
@@ -69,7 +69,7 @@ plot_NBRUN() {
 mkdir -p warm_plot
 mkdir -p meta_plot 
 mkdir -p cqa
-
+make clean
 TODO=$(tail +9 Makefile | grep : | cut -d : -f 1)
 
 

@@ -1,6 +1,6 @@
 EXEC=subject10
 CC=gcc
-FLAGS= -Wall -g -funroll-loops -march=skylake -msse4
+FLAGS= -Wall -g
 SRC=subject10 rdtsc main
 OBJ=rdtsc.o subject10.o main.o
 clean:
