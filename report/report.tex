@@ -90,9 +90,10 @@
   \subsection{Topologie du système}
     \begin{figure}[ht!]
       \centering
-      \includegraphics[width=100mm]{resources/lstopo.png}
+      \includegraphics[scale=0.35]{resources/lstopo.png}
       \caption{Topologie générée par \href{https://manpages.debian.org/jessie/hwloc/lstopo.1.en.html}{lstopo}}
     \end{figure}
+  \newpage
   \subsection{Code de la boucle}
     \lstinputlisting[language=c]{../subject10.c}
 \section{Determination des paramètres}
@@ -124,5 +125,9 @@
       L3 & 23 & 1448 & 8190Ko \\\hline
       RAM & 34 & 65536 & 16Gb \\\hline
     \end{tabular}
-
+    \subsection{Déterminer le warmup}
+    \subsubsection{L1 : taille 90}
+    \subsubsection{L2 : taille 256}
+    \subsubsection{L3 : taille 1448}
+    \subsubsection{RAM : taille 65536}
 \end{document}
