@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <cstring>
 using namespace std;
 int main(int argc,char* argv[])
 {
@@ -8,15 +8,21 @@ int main(int argc,char* argv[])
     in.open(argv[1]);
     ofstream out;
     int a,b,c;
-    out.open("Og.outliered");
+    char outp[255]="../outlier_plot/";
+    strcat(outp,argv[1]); strcat(outp,".outlr.tsv");
+//    cout << "opening " << outp << endl;
+    out.open(outp);
     in >> a >> b;
     out << a <<" " <<b << endl;
     while (!in.eof() )
     {
         in >> a >> c;
-        if(c-b < 300)
+        if(abs(c-b) < 5000)
+        {
             out << a <<" "<< c << endl;
-        b=c;
+        }
+            b=c;
+        //}
     }
     in.close();
     out.close();
