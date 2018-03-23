@@ -8,11 +8,6 @@ clean:
 	rm -f O*
 outlier:
 	g++ outlier.cpp -o outlier
-Og:
-	$(CC) $(FLAGS) -c subject10.c
-	$(CC) $(FLAGS) -c rdtsc.c
-	$(CC) $(FLAGS) -c main.c
-	$(CC) $(OBJ) -o Og
 O2: 
 	$(CC) $(FLAGS) -O2 -c subject10.c
 	$(CC) $(FLAGS) -O2 -c rdtsc.c

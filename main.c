@@ -21,17 +21,19 @@ int main(int argc, char* argv[])
     for(i=0; i<size; i++)
         a[i]=calloc(1,size*sizeof(a[i][0]));
 
-    sprintf(name,"warm_plot/%s.tsv",argv[0]);
+    sprintf(name,"warmup/%s.tsv",argv[0]);
     output=fopen(name,"w+");
-
+    unsigned long long warmbuff[warm];
     //warmup
     for(i=0; i<warm; i++)
     {
         start=rdtsc();
         baseline(size,a);
         end=rdtsc();
-        fprintf(output,"%d %lld\n",i,end-start);
+        warmbuff[i]=end-start;
     }
+    for(i=0;i<warm; i++)
+        fprintf(output,"%d %lld\n",i,warmbuff[i]);
 
     //function
     start=rdtsc();
