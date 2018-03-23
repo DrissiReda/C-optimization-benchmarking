@@ -4,7 +4,7 @@
 
 META=70
 WARM=200000
-NB_RUN=5000
+REPT=5000
 DATA_SIZE=70
 
 PLOT_ESTIMATE=false
@@ -15,7 +15,7 @@ plot_tsv() {
 	done
 }
 
-plot_metaTime() {
+plot_metarep() {
 	echo - META ESTIMATE PLOT -
 
 	for i in $(seq 4 50) ; do
@@ -24,7 +24,7 @@ plot_metaTime() {
 		echo '' > $med
 
 		for j in $(seq 0 $i) ; do
-			T=$(taskset -c 3 ref_O3 ${WARM} ${NB_RUN} ${DATA_SIZE})
+			T=$(taskset -c 3 ref_O3 ${WARM} ${REPT} ${DATA_SIZE})
 			echo $T >> $med
 		done
 
@@ -66,9 +66,9 @@ plot_NBRUN() {
 
 }
 
-mkdir -p warm_plot
-mkdir -p outlier_plot
-mkdir -p meta_plot
+mkdir -p warmup
+mkdir -p outliers
+mkdir -p metarep
 mkdir -p cqa
 make clean
 TODO=$(tail +11 Makefile | grep : | cut -d : -f 1)
@@ -90,11 +90,11 @@ for i in $TODO ; do
 
 	echo '' > $med
 
-	echo '' > "meta_plot/"$i".tsv"
+	echo '' > "metarep/"$i".tsv"
 	for j in $(seq 0 $META) ; do
-		T=$(taskset -c 3 ./$i ${WARM} ${NB_RUN} ${DATA_SIZE})
+		T=$(taskset -c 3 ./$i ${WARM} ${REPT} ${DATA_SIZE})
 		echo $T >> $med
-		echo $j"	"$T >> "meta_plot/"$i".tsv"
+		echo $j"	"$T >> "metarep/"$i".tsv"
 
 	done
 
@@ -103,10 +103,10 @@ for i in $TODO ; do
 	z=$(sort -n $med | sed -ne "$(($META/2+1))p")
 
 	echo $i" "$z >> res.csv
-	cd warm_plot
+	cd warmup
 	../outlier "$i.tsv"
 	cd ..
-	echo $z >> $i.tsv.median
+	#echo $z >> $i.tsv.median
 
 	echo - SLEEP -
 
@@ -118,17 +118,17 @@ echo  - PLOTING -
 
 if ${PLOT_ESTIMATE} ; then
 	sleep 3
-	plot_metaTime
+	plot_metarep
 	sleep 3
 	plot_NBRUN
 fi
 
 
-plot_tsv warm_plot
+plot_tsv warmup
 
-plot_tsv outlier_plot
+plot_tsv outliers
 
-plot_tsv meta_plot
+plot_tsv metarep
 
 echo - CQA PASS -
 
