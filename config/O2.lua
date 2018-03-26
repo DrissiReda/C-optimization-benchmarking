@@ -4,9 +4,7 @@
 -- Template of configuration file for oneview module
 
 -- Name of the binary file to analyze
-binary         = "./O2"
-
-run_command="<binary> 30 300 30"
+binary="../O2"
 
 -- List of external libraries to analyze
 external_libraries = {
@@ -155,3 +153,4 @@ maximal_path_number = 4
 -- in reports TWO and THREE. 
 is_sudo_available = true
 
+run_command="<binary> 20000 50 70"

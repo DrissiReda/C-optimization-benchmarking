@@ -3,9 +3,9 @@
 #SET RUN PARAM HERE
 
 META=70
-WARM=500
+WARM=20000
 REPT=50
-DATA_SIZE=150
+DATA_SIZE=70
 
 PLOT_ESTIMATE=false
 
@@ -103,9 +103,6 @@ for i in $TODO ; do
 	z=$(sort -n $med | sed -ne "$(($META/2+1))p")
 
 	echo $i" "$z >> res.csv
-	cd warmup
-	../outlier "$i.tsv"
-	cd ..
 	#echo $z >> $i.tsv.median
 
 	echo - SLEEP -
@@ -126,14 +123,15 @@ fi
 
 plot_tsv warmup
 
-plot_tsv outliers
+#plot_tsv outliers
 
 plot_tsv metarep
 
-echo - CQA PASS -
-
-for i in $(ls O*) ; do
-	maqao cqa fct-loops=baseline conf=all --output-format=html --output-path=cqa/cqa_$i ./$i
-done
+# echo - CQA PASS -
+# for i in $(ls O*) ; do
+# 	sed -i s/"^run_command.*$"/"run_command=\"<binary> $WARM $REPT $DATA_SIZE\""/g config/$i.lua
+# 	sed -i s/"^binary.*$"/"binary=\"..\/$i\""/g config/$i.lua
+# 	maqao oneview --create-report=one -xp=cqa/cqa_$i --config=config/$i.lua --format=html
+# done
 
 echo - DONE -
