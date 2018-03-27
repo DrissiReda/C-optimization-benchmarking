@@ -3,11 +3,11 @@
 #SET RUN PARAM HERE
 
 META=70
-WARM=20000
+WARM=200000
 REPT=50
 DATA_SIZE=70
 
-PLOT_ESTIMATE=false
+PLOT_ESTIMATE=true
 
 plot_tsv() {
 	for i in $(ls $1/*.tsv); do
@@ -24,7 +24,7 @@ plot_metarep() {
 		echo '' > $med
 
 		for j in $(seq 0 $i) ; do
-			T=$(taskset -c 3 ref_O3 ${WARM} ${REPT} ${DATA_SIZE})
+			T=$(taskset -c 3 ./O3 ${WARM} ${REPT} ${DATA_SIZE})
 			echo $T >> $med
 		done
 
@@ -49,7 +49,7 @@ plot_NBRUN() {
 		echo '' > $med
 
 		for j in $(seq 0 $META) ; do
-			T=$(taskset -c 3 ref_O3 ${WARM} $i ${DATA_SIZE})
+			T=$(taskset -c 3 ./O3 ${WARM} $i ${DATA_SIZE})
 			echo $T >> $med
 		done
 
@@ -127,11 +127,11 @@ plot_tsv warmup
 
 plot_tsv metarep
 
-# echo - CQA PASS -
-# for i in $(ls O*) ; do
-# 	sed -i s/"^run_command.*$"/"run_command=\"<binary> $WARM $REPT $DATA_SIZE\""/g config/$i.lua
-# 	sed -i s/"^binary.*$"/"binary=\"..\/$i\""/g config/$i.lua
-# 	maqao oneview --create-report=one -xp=cqa/cqa_$i --config=config/$i.lua --format=html
-# done
+echo - CQA PASS -
+for i in $(ls O*) ; do
+	sed -i s/"^run_command.*$"/"run_command=\"<binary> $WARM $REPT $DATA_SIZE\""/g config/$i.lua
+	sed -i s/"^binary.*$"/"binary=\"..\/$i\""/g config/$i.lua
+	maqao oneview --create-report=one -xp=cqa/cqa_$i --config=config/$i.lua --format=html
+done
 
 echo - DONE -
