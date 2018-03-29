@@ -100,13 +100,13 @@
   \subsection{Taille des données}
     Notre boucle utilise un tableau de \texttt{double} de taille $n\times n$
     chaque case prend 8 octets. \\
-    Donc le coût total (en mémoire) de notre boucle sera de $4n^2$ . \\
+    Donc le coût total (en mémoire) de notre boucle sera de $8n^2$ . \\
 
     Si nous voulons utiliser L1, L2, L3 ou la ram il faut trouver l'intervalle de chacun
     Soit T la taille maximale (qui serait en puissance de 2 alors $T=2^t$) :
     \begin{align}
-      4n^2 \leq 2^t \\
-      n \leq 2^{\frac{t-2}{2}}
+      8n^2 \leq 2^t \\
+      n \leq 2^{\frac{t-3}{2}}
     \end{align}
     Les données des différents caches et ram sont
     \begin{itemize}
@@ -120,14 +120,16 @@
       \hline
       Mémoire & $2^t$ & Taille & coût \\\hline
       \hline
-      L1 & 15 & 90 & 31.64Ko \\\hline
-      L2 & 18 & 256 & 256Ko \\\hline
-      L3 & 23 & 1448 & 8190Ko \\\hline
-      RAM & 34 & 65536 & 16Gb \\\hline
+      L1 & 15 & 64 & 31.64Ko \\\hline
+      L2 & 18 & 181 & 256Ko \\\hline
+      L3 & 23 & 1024 & 8190Ko \\\hline
+      RAM & 34 & 46340 & 16Gb \\\hline
     \end{tabular}
+    Nous n'allons pas prendre totalement toute la taille des caches (L1/L2/L3) puisque nous ne
+    pouvons pas prendre un maximum théorique comme un cas réel
     \subsection{Déterminer le warmup}
-    \subsubsection{L1 : taille 90}
-    \subsubsection{L2 : taille 256}
-    \subsubsection{L3 : taille 1448}
-    \subsubsection{RAM : taille 65536}
+    \subsubsection{L1 : taille 60}
+    \subsubsection{L2 : taille 170}
+    \subsubsection{L3 : taille 1000}
+    \subsubsection{RAM : taille 20000}
 \end{document}
