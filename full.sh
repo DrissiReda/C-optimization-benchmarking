@@ -2,10 +2,10 @@
 
 #SET RUN PARAM HERE
 
-META=70
-WARM=200000
-REPT=50
-DATA_SIZE=70
+META=70 # number of meta repitions
+WARM=20 # number of warmup iterations
+REPT=50 # number of reps in a single run
+DATA_SIZE=2000 # size of the array on which we do our calculations
 
 PLOT_ESTIMATE=true
 
@@ -17,22 +17,19 @@ plot_tsv() {
 
 plot_metarep() {
 	echo - META ESTIMATE PLOT -
-
-	for i in $(seq 4 50) ; do
+    echo '' > metamed.tsv
+	for i in $(seq 1 $META) ; do
 		med=$(mktemp)
 
 		echo '' > $med
 
 		for j in $(seq 0 $i) ; do
-			T=$(taskset -c 3 ./O3 ${WARM} ${REPT} ${DATA_SIZE})
+			T=$(taskset -c 3 ./O3 3 ${REPT} ${DATA_SIZE})
 			echo $T >> $med
 		done
-
-		echo - RESULT WRITING FOR $i -
-
 		z=$(sort -n $med | sed -ne "$(($i/2+1))p")
 
-		echo $i"	"$z >> metamed.tsv
+		echo $i","$z >> metamed.tsv
 	done
 
 	gnuplot -e "set terminal svg ; set output 'metamed.svg' ; plot 'metamed.tsv' with line"
@@ -42,19 +39,16 @@ plot_metarep() {
 plot_NBRUN() {
 
 	echo - REP ESTIMATE PLOT -
-
-	for i in $(seq 4 50) ; do
+    echo '' > rep.tsv
+	for i in $(seq 1 50 $REPT) ; do
 		med=$(mktemp)
 
 		echo '' > $med
 
 		for j in $(seq 0 $META) ; do
-			T=$(taskset -c 3 ./O3 ${WARM} $i ${DATA_SIZE})
+			T=$(taskset -c 3 ./O3 3 $i ${DATA_SIZE})
 			echo $T >> $med
 		done
-
-		echo - RESULT WRITING FOR $i -
-
 		z=$(sort -n $med | sed -ne "$(($i/2+1))p")
 
 		echo $i"	"$z >> rep.tsv
@@ -67,7 +61,7 @@ plot_NBRUN() {
 }
 
 mkdir -p warmup
-mkdir -p outliers
+mkdir -p asm
 mkdir -p metarep
 mkdir -p cqa
 make clean
@@ -91,8 +85,11 @@ for i in $TODO ; do
 	echo '' > $med
 
 	echo '' > "metarep/"$i".tsv"
-	for j in $(seq 0 $META) ; do
-		T=$(taskset -c 3 ./$i ${WARM} ${REPT} ${DATA_SIZE})
+	T=$(taskset -c 3 ./$i ${WARM} ${REPT} ${DATA_SIZE})
+	echo $T >> $med
+	echo "0	"$T >> "metarep/"$i".tsv"
+	for j in $(seq 1 $META) ; do
+		T=$(taskset -c 3 ./$i 3 ${REPT} ${DATA_SIZE})
 		echo $T >> $med
 		echo $j"	"$T >> "metarep/"$i".tsv"
 
@@ -129,9 +126,8 @@ plot_tsv metarep
 
 echo - CQA PASS -
 for i in $(ls O*) ; do
-	sed -i s/"^run_command.*$"/"run_command=\"<binary> $WARM $REPT $DATA_SIZE\""/g config/$i.lua
-	sed -i s/"^binary.*$"/"binary=\"..\/$i\""/g config/$i.lua
-	maqao oneview --create-report=one -xp=cqa/cqa_$i --config=config/$i.lua --format=html
+	maqao cqa fct-loops=baseline $i > cqa/$i.cqa
+	objdump -d $i > asm/$i.asm
 done
 
 echo - DONE -

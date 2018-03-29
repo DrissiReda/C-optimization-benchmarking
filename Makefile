@@ -24,10 +24,15 @@ O3Nat:
 	$(CC) $(FLAGS) -O3 -march=native -c main.c
 	$(CC) $(OBJ) -o O3Nat
 Ofast:
-	$(CC) $(FLAGS) -Ofast -c subject10.c
-	$(CC) $(FLAGS) -Ofast -c rdtsc.c
-	$(CC) $(FLAGS) -Ofast -c main.c
+	$(CC) $(FLAGS) -Ofast -march=native -c subject10.c
+	$(CC) $(FLAGS) -Ofast -march=native -c rdtsc.c
+	$(CC) $(FLAGS) -Ofast -march=native -c main.c
 	$(CC) $(OBJ) -o Ofast
+OFun:
+	$(CC) $(FLAGS) -Ofast -funroll-loops -march=native -c subject10.c
+	$(CC) $(FLAGS) -Ofast -funroll-loops -march=native -c rdtsc.c
+	$(CC) $(FLAGS) -Ofast -funroll-loops -march=native -c main.c
+	$(CC) $(OBJ) -o OFun
 O2_i:
 	icc $(FLAGS) -O2 -c subject10.c
 	icc $(FLAGS) -O2 -c rdtsc.c
