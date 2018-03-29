@@ -8,6 +8,7 @@
 \usepackage{titlesec}
 \usepackage{amsmath}
 \usepackage{color}
+\usepackage{svg}
 \setcounter{tocdepth}{5}
 \setcounter{secnumdepth}{4}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -129,7 +130,79 @@
     pouvons pas prendre un maximum théorique comme un cas réel
     \subsection{Déterminer le warmup}
     \subsubsection{L1 : taille 60}
+      \newpage
+      \paragraph{compilateur \texttt{GCC©}}
+        \subparagraph{ \texttt{Optimisation O2}}
+      Nous retrouvons ce résultat pour L1 :
+      \begin{figure}[ht!]
+        \centering
+        \includegraphics[scale=0.45]{resources/warmup/L1/O2.png}
+        \caption{Résultat du warmup avec option \texttt{O2} du compilateur \textbf{GCC}}
+      \end{figure}
+      \newpage
+      \subparagraph{ \texttt{Optimisation O3}}
+    Nous retrouvons ce résultat pour L1 :
+    \begin{figure}[ht!]
+      \centering
+      \includegraphics[scale=0.45]{resources/warmup/L1/O3.png}
+      \caption{Résultat du warmup avec option \texttt{O3} du compilateur \textbf{GCC}}
+    \end{figure}
+    \newpage
+\subparagraph{ \texttt{Optimisation O3 march=native}}
+  Nous retrouvons ce résultat pour L1 :
+  \begin{figure}[ht!]
+    \centering
+\includegraphics[scale=0.45]{resources/warmup/L1/O3Nat.png}
+    \caption{Résultat du warmup avec option \texttt{O3 march=native} du compilateur \textbf{GCC}}
+  \end{figure}
+  \newpage
+\subparagraph{ \texttt{Optimisation Ofast}}
+Nous retrouvons ce résultat pour L1 :
+\begin{figure}[ht!]
+  \centering
+\includegraphics[scale=0.45]{resources/warmup/L1/Ofast.png}
+  \caption{Résultat du warmup avec option \texttt{Ofast} du compilateur \textbf{GCC}}
+\end{figure}
+\newpage
+\paragraph{compilateur \texttt{ICC©}}
+    \subparagraph{ \texttt{Optimisation O2}}
+  Nous retrouvons ce résultat pour L1 :
+  \begin{figure}[ht!]
+    \centering
+\includegraphics[scale=0.45]{resources/warmup/L1/O2_i.png}
+    \caption{Résultat du warmup avec option \texttt{O2} du compilateur \textbf{ICC}}
+  \end{figure}
+  \newpage
+\subparagraph{ \texttt{Optimisation O3}}
+Nous retrouvons ce résultat pour L1 :
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[scale=0.45]{resources/warmup/L1/O3_i.png}
+  \caption{Résultat du warmup avec option \texttt{O3} du compilateur \textbf{ICC}}
+\end{figure}
+\newpage
+\subparagraph{ \texttt{Optimisation O3 xHost}}
+Nous retrouvons ce résultat pour L1 :
+  \begin{figure}[ht!]
+    \centering
+    \includegraphics[scale=0.45]{resources/warmup/L1/O3Nat_i.png}
+    \caption{Résultat du warmup avec option \texttt{O3 xHost} du compilateur \textbf{ICC}}
+  \end{figure}
+  \newpage
+\subparagraph{ \texttt{Optimisation Ofast}}
+Nous retrouvons ce résultat pour L1 :
+  \begin{figure}[ht!]
+    \centering
+    \includegraphics[scale=0.45]{resources/warmup/L1/Ofast_i.png}
+    \caption{Résultat du warmup avec option \texttt{Ofast} du compilateur \textbf{ICC}}
+  \end{figure}
     \subsubsection{L2 : taille 170}
     \subsubsection{L3 : taille 1000}
     \subsubsection{RAM : taille 20000}
+\section{Résultats et interprétations}
+    \subsection{compilateur GCC}
+      \subsubsection{ \texttt{ Option O2 } }
+      \subsubsection{ \texttt{ Option O3 }  }
+      \subsubsection{ \texttt{ Option O3Nat} }
+      \subsubsection{ \texttt{ Option Ofast } }
 \end{document}
