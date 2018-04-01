@@ -28,11 +28,11 @@ Ofast:
 	$(CC) $(FLAGS) -Ofast -march=native -c rdtsc.c
 	$(CC) $(FLAGS) -Ofast -march=native -c main.c
 	$(CC) $(OBJ) -o Ofast
-OFun:
+Ofun:
 	$(CC) $(FLAGS) -Ofast -funroll-loops -march=native -c subject10.c
 	$(CC) $(FLAGS) -Ofast -funroll-loops -march=native -c rdtsc.c
 	$(CC) $(FLAGS) -Ofast -funroll-loops -march=native -c main.c
-	$(CC) $(OBJ) -o OFun
+	$(CC) $(OBJ) -o Ofun
 O2_i:
 	icc $(FLAGS) -O2 -c subject10.c
 	icc $(FLAGS) -O2 -c rdtsc.c
@@ -53,3 +53,8 @@ Ofast_i:
 	icc $(FLAGS) -Ofast -c rdtsc.c
 	icc $(FLAGS) -Ofast -c main.c
 	icc $(OBJ) -o Ofast_i
+Ofun_i:
+	icc $(FLAGS) -Ofast -funroll-loops -c -xHost subject10.c
+	icc $(FLAGS) -Ofast -funroll-loops -c -xHost rdtsc.c
+	icc $(FLAGS) -Ofast -funroll-loops -c -xHost main.c
+	icc $(OBJ) -o Ofun_i

@@ -64,6 +64,7 @@ mkdir -p warmup
 mkdir -p asm
 mkdir -p metarep
 mkdir -p cqa
+mkdir -p likwid
 make clean
 TODO=$(tail +11 Makefile | grep : | cut -d : -f 1)
 
@@ -128,6 +129,10 @@ echo - CQA PASS -
 for i in $(ls O*) ; do
 	maqao cqa fct-loops=baseline $i > cqa/$i.cqa
 	objdump -d $i > asm/$i.asm
+done
+echo - LIKWID PASS -
+for i in $(ls O*) ; do
+	likwid-perfctr -C 3 -g CYCLE_ACTIVITY ./$i 3 ${REPT} ${DATA_SIZE} > likwid/$i.txt 
 done
 
 echo - DONE -

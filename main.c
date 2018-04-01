@@ -7,9 +7,10 @@ int main(int argc, char* argv[])
 {
     if(argc<4)
     {
-        printf("Usage ./subject10O(3/2/1) (warm) (nb of runs) (size) \n");
+        printf("Usage ./O(3/2/1) (warm) (nb of runs) (size) \n");
         exit(1);
     }
+    
     int size=atoi(argv[3]);
     int warm=atoi(argv[1]);
     int rept=atoi(argv[2]);
@@ -40,7 +41,7 @@ int main(int argc, char* argv[])
     for(i=0; i<rept; i++)
         baseline(size,a);
     end=rdtsc();
-    printf("%lld\n",(end-start)/rept);
+    printf("%f\n",((float)(end-start))/(rept*size*size));
 
 
     fclose(output);
