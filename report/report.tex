@@ -73,7 +73,16 @@
 \tableofcontents
 \newpage
 \section{Introduction}
-  \subsection{Specs de la machine utilisée}
+ \subsection{Objectifs}
+  	L'objectif de ce projet est d'étudier un noyau de code et d'optimiser sa compilation. Nous traitons ici la phase I de ce projet qui consiste en 
+  	\begin{itemize}
+  	\item mesurer la performance du noyau pour différents niveaux d'optimisations de gcc et d'icc
+  	\item trouver d'autres options d'optimisations pertinentes
+	\item expliquer les différences de performances entre versions d'optimisation avec MAQAO ou likwid
+	\item justifier l'implémentation du driver
+  	\end{itemize}
+  \subsection{Spécifications de la machine utilisée}
+  Nous avons traité les différents cas sur la même machine pour conserver une certaine constance dans les mesures effectuées.
     \begin{itemize}
       \item CPU : \href{https://ark.intel.com/products/88195/Intel-Core-i7-6700K-Processor-8M-Cache-up-to-4_20-GHz}
         {intel core i7 6700K 4.0GHZ 4 physical cores, 8 logical(HyperThreading©) turbo boost off}
@@ -95,9 +104,12 @@
       \caption{Topologie générée par \href{https://manpages.debian.org/jessie/hwloc/lstopo.1.en.html}{lstopo}}
     \end{figure}
   \newpage
-  \subsection{Code de la boucle}
+  \subsection{Noyau}
+  Le noyau traité est le suivant :
     \lstinputlisting[language=c]{../subject10.c}
-\section{Determination des paramètres}
+    
+ 
+\section{Détermination des paramètres}
   \subsection{Taille des données}
     Notre boucle utilise un tableau de \texttt{double} de taille $n\times n$
     chaque case prend 8 octets. \\
@@ -126,83 +138,116 @@
       L3 & 23 & 1024 & 8190Ko \\\hline
       RAM & 34 & 46340 & 16Gb \\\hline
     \end{tabular}
-    Nous n'allons pas prendre totalement toute la taille des caches (L1/L2/L3) puisque nous ne
-    pouvons pas prendre un maximum théorique comme un cas réel
-    \subsection{Déterminer le warmup}
+    
+   Par précaution, nous n'allons pas prendre des tailles de tableau exactement identiques aux tailles maximales des caches, pour éviter tout débordement.
+    \subsection{Nombre de warmup}
+    Nous allons étudier pour chaque taille de tableau, et pour chaque option d'optimisations le nombre de cycles nécessaires (ordonnée) pour chaque itération de warmup (abscisse). On pourra ainsi déterminer approximativement le nombre de warmup necessaires pour atteindre le régime permanent.
     \subsubsection{L1 : taille 60}
       \newpage
-      \paragraph{compilateur \texttt{GCC©}}
+      \paragraph{compilateur \texttt{GCC}}
         \subparagraph{ \texttt{Optimisation O2}}
-      Nous retrouvons ce résultat pour L1 :
+      Nous trouvons ce résultat pour L1 :
       \begin{figure}[ht!]
         \centering
         \includegraphics[scale=0.45]{resources/L1/warmup/O2.png}
         \caption{Résultat du warmup avec option \texttt{O2} du compilateur \textbf{GCC}}
       \end{figure}
+      
+      Le pic observé correspond à une interférence, nous n'en tiendrons donc pas compte. On observe que le régime permanent est atteint très vite, on appliquera donc 20 warmups.
       \newpage
       \subparagraph{ \texttt{Optimisation O3}}
-    Nous retrouvons ce résultat pour L1 :
+    Nous trouvons ce résultat pour L1 :
     \begin{figure}[ht!]
       \centering
       \includegraphics[scale=0.45]{resources/L1/warmup/O3.png}
       \caption{Résultat du warmup avec option \texttt{O3} du compilateur \textbf{GCC}}
     \end{figure}
+    
+    Ici on observe un régime transitoire de très faible durée, un nombre de warmups de 20 est également suffisant.
     \newpage
 \subparagraph{ \texttt{Optimisation O3 march=native}}
-  Nous retrouvons ce résultat pour L1 :
+  Nous trouvons ce résultat pour L1 :
   \begin{figure}[ht!]
     \centering
 \includegraphics[scale=0.45]{resources/L1/warmup/O3Nat.png}
     \caption{Résultat du warmup avec option \texttt{O3 march=native} du compilateur \textbf{GCC}}
   \end{figure}
+  
+  Le résultat obtenu ici est totalement instable, on ne peut pas identifier de stabilisation, donc opérer des warmups ne semble pas avoir de grand intérêt.
   \newpage
 \subparagraph{ \texttt{Optimisation Ofast}}
-Nous retrouvons ce résultat pour L1 :
+Nous trouvons ce résultat pour L1 :
 \begin{figure}[ht!]
   \centering
 \includegraphics[scale=0.45]{resources/L1/warmup/Ofast.png}
   \caption{Résultat du warmup avec option \texttt{Ofast} du compilateur \textbf{GCC}}
 \end{figure}
+
+On observe, comme pour O3, un très court régime transitoire (inférieur à 5 cycles). Un premier warmup de 20 itérations est retenu.
+
 \newpage
-\paragraph{compilateur \texttt{ICC©}}
+\paragraph{Compilateur \texttt{ICC©}}
     \subparagraph{ \texttt{Optimisation O2}}
-  Nous retrouvons ce résultat pour L1 :
+  Nous trouvons ce résultat pour L1 :
   \begin{figure}[ht!]
     \centering
 \includegraphics[scale=0.45]{resources/L1/warmup/O2_i.png}
     \caption{Résultat du warmup avec option \texttt{O2} du compilateur \textbf{ICC}}
+    
+	Très court régime transitoire, on conserve le nombre de 20 warmups.    
   \end{figure}
   \newpage
 \subparagraph{ \texttt{Optimisation O3}}
-Nous retrouvons ce résultat pour L1 :
+Nous trouvons ce résultat pour L1 :
 \begin{figure}[ht!]
   \centering
   \includegraphics[scale=0.45]{resources/L1/warmup/O3_i.png}
   \caption{Résultat du warmup avec option \texttt{O3} du compilateur \textbf{ICC}}
 \end{figure}
+
+Très court régime transitoire, on conserve le nombre de 20 warmups. 
 \newpage
 \subparagraph{ \texttt{Optimisation O3 xHost}}
-Nous retrouvons ce résultat pour L1 :
+Nous trouvons ce résultat pour L1 :
   \begin{figure}[ht!]
     \centering
     \includegraphics[scale=0.45]{resources/L1/warmup/O3Nat_i.png}
     \caption{Résultat du warmup avec option \texttt{O3 xHost} du compilateur \textbf{ICC}}
   \end{figure}
+   
+  Très court régime transitoire, on conserve le nombre de 20 warmups. 
   \newpage
 \subparagraph{ \texttt{Optimisation Ofast}}
-Nous retrouvons ce résultat pour L1 :
+Nous trouvons ce résultat pour L1 :
   \begin{figure}[ht!]
     \centering
     \includegraphics[scale=0.45]{resources/L1/warmup/Ofast_i.png}
     \caption{Résultat du warmup avec option \texttt{Ofast} du compilateur \textbf{ICC}}
   \end{figure}
-    \subsubsection{L2 : taille 170}
-    \subsubsection{L3 : taille 1000}
-    \subsubsection{RAM : taille 20000}
+  
+	Ici, le résultat est différent des cas prédédents : on observe que pendant les 20 premiers warmups on est en régime transitoire et qu'on se stabilise au delà. On prendra donc également 20 warmups.
+	
+	Rétrospectivement, étant donné le nombre très faible de warmups nécessaires à chaque configuration d'optimisation (3 ou 20 ne change pas grand chose, on reste dans le même ordre de grandeur), et par souci de simplicité, nous avons arbitrairement fixé à 20 le nombre de warmups pour toutes les options, au regard de celle étudiée dernièrement et en nécessitant plus que les autres.
+  
+    \subsubsection{L2 : taille 170, L3 : taille 1000, RAM : taille 20000}
+    Les résultats obtenus sont très similaires, on considèrera donc pour chaque optimisation, indépendamment de la taille des données traitées par le noyau, que 20 warmups sont nécessaires à la première méta-répétition, puis on abaissera à 3 warmups pour les méta-répétions suivantes, car la machine est "chaude".
+    
 \section{Résultats et interprétations}
-    \subsection{compilateur GCC}
+    \subsection{Compilateur GCC}
+      \subsubsection{ \texttt{ Option O2 } }
+     
+      \subsubsection{ \texttt{ Option O3 }  }
+      \subsubsection{ \texttt{ Option O3Nat} }
+      \subsubsection{ \texttt{ Option Ofast } }
+	      \paragraph{Justification}
+	      
+	      \paragraph{Optimisation \texttt{funroll-loops}}
+      
+      \subsection{Compilateur ICC}
       \subsubsection{ \texttt{ Option O2 } }
       \subsubsection{ \texttt{ Option O3 }  }
       \subsubsection{ \texttt{ Option O3Nat} }
       \subsubsection{ \texttt{ Option Ofast } }
+      
+ 
 \end{document}
