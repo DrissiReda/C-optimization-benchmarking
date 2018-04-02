@@ -10,7 +10,7 @@
 \usepackage{titlesec}
 \usepackage{amsmath}
 \usepackage{color}
-\usepackage{svg}
+\usepackage{multirow}
 \setcounter{tocdepth}{5}
 \setcounter{secnumdepth}{4}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -250,8 +250,10 @@ Nous trouvons ce résultat pour L1 :
               Vectorization
               -------------
               Your loop is NOT VECTORIZED and could benefit from vectorization.
-              By vectorizing your loop, you can lower the cost of an iteration from 4.00 to 1.00 cycles (4.00x speedup).
-              Since your execution units are vector units, only a vectorized loop can use their full power.
+              By vectorizing your loop, you can lower the cost of an iteration
+              from 4.00 to 1.00 cycles (4.00x speedup).
+              Since your execution units are vector units,
+              only a vectorized loop can use their full power.
             \end{verbatim}
       \subsubsection{ \texttt{ Option O3 }  }
       \paragraph{Assembleur}
@@ -267,8 +269,10 @@ Nous trouvons ce résultat pour L1 :
           Vectorization
           -------------
           Your loop is NOT VECTORIZED and could benefit from vectorization.
-          By vectorizing your loop, you can lower the cost of an iteration from 4.00 to 1.00 cycles (4.00x speedup).
-          Since your execution units are vector units, only a vectorized loop can use their full power.
+          By vectorizing your loop, you can lower the cost of an iteration
+          from 4.00 to 1.00 cycles (4.00x speedup).
+          Since your execution units are vector units,
+          only a vectorized loop can use their full power.
         \end{verbatim}
       \subsubsection{ \texttt{ Option O3Nat} }
       \paragraph{Assembleur}
@@ -284,8 +288,10 @@ Nous trouvons ce résultat pour L1 :
           Vectorization
           -------------
           Your loop is NOT VECTORIZED and could benefit from vectorization.
-          By vectorizing your loop, you can lower the cost of an iteration from 4.00 to 1.00 cycles (4.00x speedup).
-          Since your execution units are vector units, only a vectorized loop can use their full power.
+          By vectorizing your loop, you can lower the cost of an iteration
+          from 4.00 to 1.00 cycles (4.00x speedup).
+          Since your execution units are vector units,
+          only a vectorized loop can use their full power.
         \end{verbatim}
       \subsubsection{ \texttt{ Option Ofast } }
       \paragraph{Assembleur}
@@ -301,7 +307,9 @@ Nous trouvons ce résultat pour L1 :
         \begin{verbatim}
           Vectorization status
           --------------------
-          Your loop is fully vectorized (all SSE/AVX instructions are used in vector version (process two or more data elements in vector registers), using full register length).
+          Your loop is fully vectorized (all SSE/AVX instructions
+          are used in vector version (process two or more data elements
+          in vector registers), using full register length).
         \end{verbatim}
 	      \paragraph{Justification}
         \subparagraph{\texttt{Ofast}}
@@ -336,7 +344,9 @@ Nous trouvons ce résultat pour L1 :
           \begin{verbatim}
             Vectorization status
             --------------------
-            Your loop is fully vectorized (all SSE/AVX instructions are used in vector version (process two or more data elements in vector registers), using full register length).
+            Your loop is fully vectorized (all SSE/AVX instructions
+            are used in vector version (process two or more data elements
+            in vector registers), using full register length).
           \end{verbatim}
       \newpage
       \subsection{Compilateur ICC}
@@ -360,8 +370,10 @@ Nous trouvons ce résultat pour L1 :
           Vectorization
           -------------
           Your loop is PARTIALLY VECTORIZED and could benefit from full vectorization.
-          By fully vectorizing your loop, you can lower the cost of an iteration from 4.00 to 2.00 cycles (2.00x speedup).
-          Since your execution units are vector units, only a fully vectorized loop can use their full power.
+          By fully vectorizing your loop, you can lower the cost of an iteration
+          from 4.00 to 2.00 cycles (2.00x speedup).
+          Since your execution units are vector units,
+          only a fully vectorized loop can use their full power.
         \end{verbatim}
       \subsubsection{ \texttt{ Option O3 }  }
       \paragraph{Assembleur}
@@ -383,8 +395,10 @@ Nous trouvons ce résultat pour L1 :
           Vectorization
           -------------
           Your loop is PARTIALLY VECTORIZED and could benefit from full vectorization.
-          By fully vectorizing your loop, you can lower the cost of an iteration from 4.00 to 2.00 cycles (2.00x speedup).
-          Since your execution units are vector units, only a fully vectorized loop can use their full power.
+          By fully vectorizing your loop, you can lower the cost of an iteration
+          from 4.00 to 2.00 cycles (2.00x speedup).
+          Since your execution units are vector units,
+          only a fully vectorized loop can use their full power.
         \end{verbatim}
       \subsubsection{ \texttt{ Option O3Nat} }
       \paragraph{Assembleur}
@@ -403,7 +417,9 @@ Nous trouvons ce résultat pour L1 :
         \begin{verbatim}
           Vectorization status
           --------------------
-          Your loop is fully vectorized (all SSE/AVX instructions are used in vector version (process two or more data elements in vector registers), using full register length).
+          Your loop is fully vectorized (all SSE/AVX instructions
+          are used in vector version (process two or more data elements
+          in vector registers), using full register length).
         \end{verbatim}
       \subsubsection{ \texttt{ Option Ofast } }
         \paragraph{Assembleur}
@@ -427,8 +443,10 @@ Nous trouvons ce résultat pour L1 :
           Vectorization
           -------------
           Your loop is PARTIALLY VECTORIZED and could benefit from full vectorization.
-          By fully vectorizing your loop, you can lower the cost of an iteration from 4.00 to 2.00 cycles (2.00x speedup).
-          Since your execution units are vector units, only a fully vectorized loop can use their full power.
+          By fully vectorizing your loop, you can lower the cost of an iteration
+          from 4.00 to 2.00 cycles (2.00x speedup).
+          Since your execution units are vector units,
+          only a fully vectorized loop can use their full power.
         \end{verbatim}
       \subsubsection{\texttt{ Option funroll-loops}}
         Le résultat que nous trouvons est :
@@ -455,8 +473,23 @@ Nous trouvons ce résultat pour L1 :
         \begin{verbatim}
           Vectorization status
           --------------------
-          Your loop is fully vectorized (all SSE/AVX instructions are used in vector version (process two or more data elements in vector registers), using full register length).
+          Your loop is fully vectorized (all SSE/AVX instructions
+          are used in vector version (process two or more data elements
+          in vector registers), using full register length).
         \end{verbatim}
-
-
+        Les médianes des différents temps d'exécution :\\
+        \begin{tabular}{|c| c | c |}
+          \hline
+        \multirow{5}{*}{GCC \textsuperscript \textcopyleft} & \texttt{-O2} & $3.964161$  \\ \cline{2-3}
+              & \texttt{-O3}                                  & $3.964172$  \\ \cline{2-3}
+           & \texttt{-O3 -march=native}                    & $3.964278$  \\ \cline{2-3}
+              & \texttt{-Ofast -march=native}                 & $0.824717$  \\ \cline{2-3}
+              & \texttt{-Ofast -march=native -funroll-loops}  & $1.036789$  \\ \hline
+      \multirow{5}{*}{ICC \textsuperscript \textcopyright}   & \texttt{-O2} & $0.476589$  \\ \cline{2-3}
+              & \texttt{-O3}                                  & $0.476239$  \\ \cline{2-3}
+           & \texttt{-O3 -xHost}                           & $0.645322$  \\ \cline{2-3}
+              & \texttt{-Ofast -xHost}                        & $0.476617$  \\ \cline{2-3}
+              & \texttt{-Ofast -xHost -funroll-loops}         & $0.645228$  \\
+        \hline
+        \end{tabular}
 \end{document}
