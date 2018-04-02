@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{titlesec}
+\usepackage{tcolorbox}
 \usepackage{amsmath}
 \usepackage{color}
 \usepackage{multirow}
@@ -238,79 +239,95 @@ Nous trouvons ce résultat pour L1 :
     \subsection{Compilateur GCC\textsuperscript \textcopyleft  }
       \subsubsection{ \texttt{ Option O2 } }
           \paragraph{Assembleur}
-            \begin{verbatim}
-              bcb:	75 f3                	jne    bc0 <baseline+0x30>
-              bcd:	83 c1 01             	add    $0x1,%ecx
-              bd0:	4c 01 c6             	add    %r8,%rsi
-              bd3:	39 cf                	cmp    %ecx,%edi
-              bd5:	75 d9                	jne    bb0 <baseline+0x20>
+            \begin{tcolorbox}
+              \begin{verbatim}
+    bcb:	75 f3                	jne    bc0 <baseline+0x30>
+    bcd:	83 c1 01             	add    $0x1,%ecx
+    bd0:	4c 01 c6             	add    %r8,%rsi
+    bd3:	39 cf                	cmp    %ecx,%edi
+    bd5:	75 d9                	jne    bb0 <baseline+0x20>
             \end{verbatim}
+          \end{tcolorbox}
           \paragraph{MAQAO}
-            \begin{verbatim}
-              Vectorization
-              -------------
-              Your loop is NOT VECTORIZED and could benefit from vectorization.
-              By vectorizing your loop, you can lower the cost of an iteration
-              from 4.00 to 1.00 cycles (4.00x speedup).
-              Since your execution units are vector units,
-              only a vectorized loop can use their full power.
+            \begin{tcolorbox}
+              \begin{verbatim}
+    Vectorization
+    -------------
+    Your loop is NOT VECTORIZED and could benefit from vectorization.
+    By vectorizing your loop, you can lower the cost of an iteration
+    from 4.00 to 1.00 cycles (4.00x speedup).
+    Since your execution units are vector units,
+    only a vectorized loop can use their full power.
             \end{verbatim}
+          \end{tcolorbox}
       \subsubsection{ \texttt{ Option O3 }  }
       \paragraph{Assembleur}
-        \begin{verbatim}
-          bcb:	75 f3                	jne    bc0 <baseline+0x30>
-          bcd:	83 c1 01             	add    $0x1,%ecx
-          bd0:	4c 01 c6             	add    %r8,%rsi
-          bd3:	39 cf                	cmp    %ecx,%edi
-          bd5:	75 d9                	jne    bb0 <baseline+0x20>
+        \begin{tcolorbox}
+          \begin{verbatim}
+bcb:	75 f3                	jne    bc0 <baseline+0x30>
+bcd:	83 c1 01             	add    $0x1,%ecx
+bd0:	4c 01 c6             	add    %r8,%rsi
+bd3:	39 cf                	cmp    %ecx,%edi
+bd5:	75 d9                	jne    bb0 <baseline+0x20>
         \end{verbatim}
+      \end{tcolorbox}
       \paragraph{MAQAO}
-        \begin{verbatim}
-          Vectorization
-          -------------
-          Your loop is NOT VECTORIZED and could benefit from vectorization.
-          By vectorizing your loop, you can lower the cost of an iteration
-          from 4.00 to 1.00 cycles (4.00x speedup).
-          Since your execution units are vector units,
-          only a vectorized loop can use their full power.
+        \begin{tcolorbox}
+          \begin{verbatim}
+Vectorization
+-------------
+Your loop is NOT VECTORIZED and could benefit from vectorization.
+By vectorizing your loop, you can lower the cost of an iteration
+from 4.00 to 1.00 cycles (4.00x speedup).
+Since your execution units are vector units,
+only a vectorized loop can use their full power.
         \end{verbatim}
+      \end{tcolorbox}
       \subsubsection{ \texttt{ Option O3Nat} }
       \paragraph{Assembleur}
-        \begin{verbatim}
-          bcb:	75 f3                	jne    bc0 <baseline+0x30>
-          bcd:	83 c1 01             	add    $0x1,%ecx
-          bd0:	4c 01 c6             	add    %r8,%rsi
-          bd3:	39 cf                	cmp    %ecx,%edi
-          bd5:	75 d9                	jne    bb0 <baseline+0x20>
+        \begin{tcolorbox}
+          \begin{verbatim}
+bcb:	75 f3                	jne    bc0 <baseline+0x30>
+bcd:	83 c1 01             	add    $0x1,%ecx
+bd0:	4c 01 c6             	add    %r8,%rsi
+bd3:	39 cf                	cmp    %ecx,%edi
+bd5:	75 d9                	jne    bb0 <baseline+0x20>
         \end{verbatim}
+      \end{tcolorbox}
       \paragraph{MAQAO}
-        \begin{verbatim}
-          Vectorization
-          -------------
-          Your loop is NOT VECTORIZED and could benefit from vectorization.
-          By vectorizing your loop, you can lower the cost of an iteration
-          from 4.00 to 1.00 cycles (4.00x speedup).
-          Since your execution units are vector units,
-          only a vectorized loop can use their full power.
+        \begin{tcolorbox}
+          \begin{verbatim}
+Vectorization
+-------------
+Your loop is NOT VECTORIZED and could benefit from
+vectorization. By vectorizing your loop, you can lower
+the cost of an iteration from 4.00 to 1.00 cycles
+(4.00x speedup). Since your execution units are vector
+units, only a vectorized loop can use their full power.
         \end{verbatim}
+      \end{tcolorbox}
       \subsubsection{ \texttt{ Option Ofast } }
       \paragraph{Assembleur}
-        \begin{verbatim}
-          bc9:	e9 f0 00 00 00       	jmpq   cbe <baseline+0x12e>
-          bce:	66 90                	xchg   %ax,%ax
-          bd0:	89 f8                	mov    %edi,%eax
-          bd2:	c5 fb 58 02          	vaddsd (%rdx),%xmm0,%xmm0
-          bd6:	83 f8 01             	cmp    $0x1,%eax
-          bd9:	0f 84 51 01 00 00    	je     d30 <baseline+0x1a0>
+        \begin{tcolorbox}
+          \begin{verbatim}
+bc9:	e9 f0 00 00 00       	jmpq   cbe <baseline+0x12e>
+bce:	66 90                	xchg   %ax,%ax
+bd0:	89 f8                	mov    %edi,%eax
+bd2:	c5 fb 58 02          	vaddsd (%rdx),%xmm0,%xmm0
+bd6:	83 f8 01             	cmp    $0x1,%eax
+bd9:	0f 84 51 01 00 00    	je     d30 <baseline+0x1a0>
         \end{verbatim}
+      \end{tcolorbox}
       \paragraph{MAQAO}
-        \begin{verbatim}
-          Vectorization status
-          --------------------
-          Your loop is fully vectorized (all SSE/AVX instructions
-          are used in vector version (process two or more data elements
-          in vector registers), using full register length).
+        \begin{tcolorbox}
+          \begin{verbatim}
+Vectorization status
+--------------------
+Your loop is fully vectorized (all SSE/AVX instructions
+are used in vector version (process two or more data elements
+in vector registers), using full register length).
         \end{verbatim}
+      \end{tcolorbox}
 	      \paragraph{Justification}
         \subparagraph{\texttt{Ofast}}
 	      Grâce à \texttt{ffast-math} le compilateur ignore les normes et la sécurité, en effet ce flag
@@ -327,127 +344,147 @@ Nous trouvons ce résultat pour L1 :
           \includegraphics[scale=0.45]{resources/L1/metarep/Ofun.png}
           \caption{Résultat des métarépétitions avec option \texttt{funroll-loops} du compilateur \textbf{GCC\textsuperscript \textcopyleft  }}
         \end{figure}
-        \subparagraph{Assembleur}
-          \begin{verbatim}
-            1322:	0f 86 14 01 00 00    	jbe    143c <baseline+0x1fc>
-            1328:	4f 8d 34 f1          	lea    (%r9,%r14,8),%r14
-            132c:	45 8d 78 ff          	lea    -0x1(%r8),%r15d
-            1330:	41 b9 01 00 00 00    	mov    $0x1,%r9d
-            1336:	49 01 f6             	add    %rsi,%r14
-            1339:	41 83 e7 07          	and    $0x7,%r15d
-            133d:	c4 c1 7d 28 0e       	vmovapd (%r14),%ymm1
-            1342:	49 8d 46 20          	lea    0x20(%r14),%rax
-            1346:	41 83 f8 01          	cmp    $0x1,%r8d
-            134a:	0f 86 d0 00 00 00    	jbe    1420 <baseline+0x1e0>
+        \subparagraph{Assembleur}\mbox{} \\
+          \begin{tcolorbox}
+            \begin{verbatim}
+  1322:	0f 86 14 01 00 00    	jbe    143c <baseline+0x1fc>
+  1328:	4f 8d 34 f1          	lea    (%r9,%r14,8),%r14
+  132c:	45 8d 78 ff          	lea    -0x1(%r8),%r15d
+  1330:	41 b9 01 00 00 00    	mov    $0x1,%r9d
+  1336:	49 01 f6             	add    %rsi,%r14
+  1339:	41 83 e7 07          	and    $0x7,%r15d
+  133d:	c4 c1 7d 28 0e       	vmovapd (%r14),%ymm1
+  1342:	49 8d 46 20          	lea    0x20(%r14),%rax
+  1346:	41 83 f8 01          	cmp    $0x1,%r8d
+  134a:	0f 86 d0 00 00 00    	jbe    1420 <baseline+0x1e0>
           \end{verbatim}
-        \subparagraph{MAQAO}
-          \begin{verbatim}
-            Vectorization status
-            --------------------
-            Your loop is fully vectorized (all SSE/AVX instructions
-            are used in vector version (process two or more data elements
-            in vector registers), using full register length).
+        \end{tcolorbox}
+        \subparagraph{MAQAO}\mbox{} \\
+          \begin{tcolorbox}
+            \begin{verbatim}
+  Vectorization status
+  --------------------
+  Your loop is fully vectorized (all SSE/AVX instructions
+  are used in vector version (process two or more data elements
+  in vector registers), using full register length).
           \end{verbatim}
+        \end{tcolorbox}
       \newpage
       \subsection{Compilateur ICC}
       \subsubsection{ \texttt{ Option O2 } }
       \paragraph{Assembleur}
-        \begin{verbatim}
-          400e39:	72 f2                	jb     400e2d <baseline+0x5d>
-          400e3b:	49 63 c0             	movslq %r8d,%rax
-          400e3e:	4d 8d 14 d1          	lea    (%r9,%rdx,8),%r10
-          400e42:	48 83 c2 08          	add    $0x8,%rdx
-          400e46:	66 41 0f 58 1a       	addpd  (%r10),%xmm3
-          400e4b:	66 41 0f 58 52 10    	addpd  0x10(%r10),%xmm2
-          400e51:	66 41 0f 58 4a 20    	addpd  0x20(%r10),%xmm1
-          400e57:	66 41 0f 58 42 30    	addpd  0x30(%r10),%xmm0
-          400e5d:	49 83 c2 40          	add    $0x40,%r10
-          400e61:	48 3b d0             	cmp    %rax,%rdx
-          400e64:	72 dc                	jb     400e42 <baseline+0x72>
+        \begin{tcolorbox}
+          \begin{verbatim}
+400e39:	72 f2                	jb     400e2d <baseline+0x5d>
+400e3b:	49 63 c0             	movslq %r8d,%rax
+400e3e:	4d 8d 14 d1          	lea    (%r9,%rdx,8),%r10
+400e42:	48 83 c2 08          	add    $0x8,%rdx
+400e46:	66 41 0f 58 1a       	addpd  (%r10),%xmm3
+400e4b:	66 41 0f 58 52 10    	addpd  0x10(%r10),%xmm2
+400e51:	66 41 0f 58 4a 20    	addpd  0x20(%r10),%xmm1
+400e57:	66 41 0f 58 42 30    	addpd  0x30(%r10),%xmm0
+400e5d:	49 83 c2 40          	add    $0x40,%r10
+400e61:	48 3b d0             	cmp    %rax,%rdx
+400e64:	72 dc                	jb     400e42 <baseline+0x72>
         \end{verbatim}
+      \end{tcolorbox}
       \paragraph{MAQAO}
-        \begin{verbatim}
-          Vectorization
-          -------------
-          Your loop is PARTIALLY VECTORIZED and could benefit from full vectorization.
-          By fully vectorizing your loop, you can lower the cost of an iteration
-          from 4.00 to 2.00 cycles (2.00x speedup).
-          Since your execution units are vector units,
-          only a fully vectorized loop can use their full power.
+        \begin{tcolorbox}
+          \begin{verbatim}
+Vectorization
+-------------
+Your loop is PARTIALLY VECTORIZED and could benefit from
+full vectorization. By fully vectorizing your loop, you can lower
+the cost of an iteration from 4.00 to 2.00 cycles (2.00x speedup).
+Since your execution units are vector units,
+only a fully vectorized loop can use their full power.
         \end{verbatim}
+      \end{tcolorbox}
       \subsubsection{ \texttt{ Option O3 }  }
       \paragraph{Assembleur}
-        \begin{verbatim}
-          400e39:	72 f2                	jb     400e2d <baseline+0x5d>
-          400e3b:	49 63 c0             	movslq %r8d,%rax
-          400e3e:	4d 8d 14 d1          	lea    (%r9,%rdx,8),%r10
-          400e42:	48 83 c2 08          	add    $0x8,%rdx
-          400e46:	66 41 0f 58 1a       	addpd  (%r10),%xmm3
-          400e4b:	66 41 0f 58 52 10    	addpd  0x10(%r10),%xmm2
-          400e51:	66 41 0f 58 4a 20    	addpd  0x20(%r10),%xmm1
-          400e57:	66 41 0f 58 42 30    	addpd  0x30(%r10),%xmm0
-          400e5d:	49 83 c2 40          	add    $0x40,%r10
-          400e61:	48 3b d0             	cmp    %rax,%rdx
-          400e64:	72 dc                	jb     400e42 <baseline+0x72>
+        \begin{tcolorbox}
+          \begin{verbatim}
+400e39:	72 f2                	jb     400e2d <baseline+0x5d>
+400e3b:	49 63 c0             	movslq %r8d,%rax
+400e3e:	4d 8d 14 d1          	lea    (%r9,%rdx,8),%r10
+400e42:	48 83 c2 08          	add    $0x8,%rdx
+400e46:	66 41 0f 58 1a       	addpd  (%r10),%xmm3
+400e4b:	66 41 0f 58 52 10    	addpd  0x10(%r10),%xmm2
+400e51:	66 41 0f 58 4a 20    	addpd  0x20(%r10),%xmm1
+400e57:	66 41 0f 58 42 30    	addpd  0x30(%r10),%xmm0
+400e5d:	49 83 c2 40          	add    $0x40,%r10
+400e61:	48 3b d0             	cmp    %rax,%rdx
+400e64:	72 dc                	jb     400e42 <baseline+0x72>
         \end{verbatim}
+      \end{tcolorbox}
       \paragraph{MAQAO}
-        \begin{verbatim}
-          Vectorization
-          -------------
-          Your loop is PARTIALLY VECTORIZED and could benefit from full vectorization.
-          By fully vectorizing your loop, you can lower the cost of an iteration
-          from 4.00 to 2.00 cycles (2.00x speedup).
-          Since your execution units are vector units,
-          only a fully vectorized loop can use their full power.
+        \begin{tcolorbox}
+          \begin{verbatim}
+Vectorization
+-------------
+Your loop is PARTIALLY VECTORIZED and could benefit from
+full vectorization. By fully vectorizing your loop, you can lower
+the cost of an iteration from 4.00 to 2.00 cycles (2.00x speedup).
+Since your execution units are vector units,
+only a fully vectorized loop can use their full power.
         \end{verbatim}
+      \end{tcolorbox}
       \subsubsection{ \texttt{ Option O3Nat} }
       \paragraph{Assembleur}
-        \begin{verbatim}
-          400ea1:	72 f3                	jb     400e96 <baseline+0x76>
-          400ea3:	48 63 d0             	movslq %eax,%rdx
-          400ea6:	c5 e5 58 1c ce       	vaddpd (%rsi,%rcx,8),%ymm3,%ymm3
-          400eab:	c5 ed 58 54 ce 20    	vaddpd 0x20(%rsi,%rcx,8),%ymm2,%ymm2
-          400eb1:	c5 f5 58 4c ce 40    	vaddpd 0x40(%rsi,%rcx,8),%ymm1,%ymm1
-          400eb7:	c5 fd 58 44 ce 60    	vaddpd 0x60(%rsi,%rcx,8),%ymm0,%ymm0
-          400ebd:	48 83 c1 10          	add    $0x10,%rcx
-          400ec1:	48 3b ca             	cmp    %rdx,%rcx
-          400ec4:	72 e0                	jb     400ea6 <baseline+0x86>
+        \begin{tcolorbox}
+          \begin{verbatim}
+400ea1:	72 f3                	jb     400e96 <baseline+0x76>
+400ea3:	48 63 d0             	movslq %eax,%rdx
+400ea6:	c5 e5 58 1c ce       	vaddpd (%rsi,%rcx,8),%ymm3,%ymm3
+400eab:	c5 ed 58 54 ce 20    	vaddpd 0x20(%rsi,%rcx,8),%ymm2,%ymm2
+400eb1:	c5 f5 58 4c ce 40    	vaddpd 0x40(%rsi,%rcx,8),%ymm1,%ymm1
+400eb7:	c5 fd 58 44 ce 60    	vaddpd 0x60(%rsi,%rcx,8),%ymm0,%ymm0
+400ebd:	48 83 c1 10          	add    $0x10,%rcx
+400ec1:	48 3b ca             	cmp    %rdx,%rcx
+400ec4:	72 e0                	jb     400ea6 <baseline+0x86>
         \end{verbatim}
+      \end{tcolorbox}
       \paragraph{MAQAO}
-        \begin{verbatim}
-          Vectorization status
-          --------------------
-          Your loop is fully vectorized (all SSE/AVX instructions
-          are used in vector version (process two or more data elements
-          in vector registers), using full register length).
+        \begin{tcolorbox}
+          \begin{verbatim}
+Vectorization status
+--------------------
+Your loop is fully vectorized (all SSE/AVX instructions
+are used in vector version (process two or more data elements
+in vector registers), using full register length).
         \end{verbatim}
+      \end{tcolorbox}
       \subsubsection{ \texttt{ Option Ofast } }
         \paragraph{Assembleur}
-          \begin{verbatim}
-            400e39:	72 f2                	jb     400e2d <baseline+0x5d>
-            400e3b:	49 63 c0             	movslq %r8d,%rax
-            400e3e:	4d 8d 14 d1          	lea    (%r9,%rdx,8),%r10
-            400e42:	48 83 c2 08          	add    $0x8,%rdx
-            400e46:	66 41 0f 58 1a       	addpd  (%r10),%xmm3
-            400e4b:	66 41 0f 58 52 10    	addpd  0x10(%r10),%xmm2
-            400e51:	66 41 0f 58 4a 20    	addpd  0x20(%r10),%xmm1
-            400e57:	66 41 0f 58 42 30    	addpd  0x30(%r10),%xmm0
-            400e5d:	49 83 c2 40          	add    $0x40,%r10
-            400e61:	48 3b d0             	cmp    %rax,%rdx
-            400e64:	72 dc                	jb     400e42 <baseline+0x72>
+          \begin{tcolorbox}
+            \begin{verbatim}
+  400e39:	72 f2                	jb     400e2d <baseline+0x5d>
+  400e3b:	49 63 c0             	movslq %r8d,%rax
+  400e3e:	4d 8d 14 d1          	lea    (%r9,%rdx,8),%r10
+  400e42:	48 83 c2 08          	add    $0x8,%rdx
+  400e46:	66 41 0f 58 1a       	addpd  (%r10),%xmm3
+  400e4b:	66 41 0f 58 52 10    	addpd  0x10(%r10),%xmm2
+  400e51:	66 41 0f 58 4a 20    	addpd  0x20(%r10),%xmm1
+  400e57:	66 41 0f 58 42 30    	addpd  0x30(%r10),%xmm0
+  400e5d:	49 83 c2 40          	add    $0x40,%r10
+  400e61:	48 3b d0             	cmp    %rax,%rdx
+  400e64:	72 dc                	jb     400e42 <baseline+0x72>
           \end{verbatim}
+        \end{tcolorbox}
           Ofast inclus moins de vectorisation que \texttt{O3 -xHost} donc c'est l'option xHost
           qui nous permet de passer de addpd vers vaddpd.
         \paragraph{MAQAO}
-        \begin{verbatim}
-          Vectorization
-          -------------
-          Your loop is PARTIALLY VECTORIZED and could benefit from full vectorization.
-          By fully vectorizing your loop, you can lower the cost of an iteration
-          from 4.00 to 2.00 cycles (2.00x speedup).
-          Since your execution units are vector units,
-          only a fully vectorized loop can use their full power.
+        \begin{tcolorbox}
+          \begin{verbatim}
+Vectorization
+-------------
+Your loop is PARTIALLY VECTORIZED and could benefit from full
+vectorization. By fully vectorizing your loop, you can lower
+the cost of an iteration from 4.00 to 2.00 cycles (2.00x speedup).
+Since your execution units are vector units,
+only a fully vectorized loop can use their full power.
         \end{verbatim}
+      \end{tcolorbox}
       \subsubsection{\texttt{ Option funroll-loops}}
         Le résultat que nous trouvons est :
         \begin{figure}[ht!]
@@ -456,27 +493,31 @@ Nous trouvons ce résultat pour L1 :
           \caption{Résultat des métarépétitions avec option \texttt{funroll-loops} du compilateur \textbf{ICC}}
         \end{figure}
         \paragraph{Assembleur}
-          \begin{verbatim}
-            400ea1:	72 f3                	jb     400e96 <baseline+0x76>
-            400ea3:	48 63 d0             	movslq %eax,%rdx
-            400ea6:	c5 e5 58 1c ce       	vaddpd (%rsi,%rcx,8),%ymm3,%ymm3
-            400eab:	c5 ed 58 54 ce 20    	vaddpd 0x20(%rsi,%rcx,8),%ymm2,%ymm2
-            400eb1:	c5 f5 58 4c ce 40    	vaddpd 0x40(%rsi,%rcx,8),%ymm1,%ymm1
-            400eb7:	c5 fd 58 44 ce 60    	vaddpd 0x60(%rsi,%rcx,8),%ymm0,%ymm0
-            400ebd:	48 83 c1 10          	add    $0x10,%rcx
-            400ec1:	48 3b ca             	cmp    %rdx,%rcx
-            400ec4:	72 e0                	jb     400ea6 <baseline+0x86>
+          \begin{tcolorbox}
+            \begin{verbatim}
+  400ea1:	72 f3                	jb     400e96 <baseline+0x76>
+  400ea3:	48 63 d0             	movslq %eax,%rdx
+  400ea6:	c5 e5 58 1c ce       	vaddpd (%rsi,%rcx,8),%ymm3,%ymm3
+  400eab:	c5 ed 58 54 ce 20    	vaddpd 0x20(%rsi,%rcx,8),%ymm2,%ymm2
+  400eb1:	c5 f5 58 4c ce 40    	vaddpd 0x40(%rsi,%rcx,8),%ymm1,%ymm1
+  400eb7:	c5 fd 58 44 ce 60    	vaddpd 0x60(%rsi,%rcx,8),%ymm0,%ymm0
+  400ebd:	48 83 c1 10          	add    $0x10,%rcx
+  400ec1:	48 3b ca             	cmp    %rdx,%rcx
+  400ec4:	72 e0                	jb     400ea6 <baseline+0x86>
           \end{verbatim}
+        \end{tcolorbox}
         Nous remarquons que contrairement à \texttt{Ofast} l'option \texttt{funroll-loops} utilise \textbf{vaddpd}
         au lieu de \textbf{addpd}, et le résultat de \textit{MAQAO} montre que notre boucle est bel et bien vectorisé
        \paragraph{MAQAO}
-        \begin{verbatim}
-          Vectorization status
-          --------------------
-          Your loop is fully vectorized (all SSE/AVX instructions
-          are used in vector version (process two or more data elements
-          in vector registers), using full register length).
+        \begin{tcolorbox}
+          \begin{verbatim}
+Vectorization status
+--------------------
+Your loop is fully vectorized (all SSE/AVX instructions
+are used in vector version (process two or more data elements
+in vector registers), using full register length).
         \end{verbatim}
+      \end{tcolorbox}
         Les médianes des différents temps d'exécution :\\
         \begin{tabular}{|c| c | c |}
           \hline
