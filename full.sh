@@ -1,63 +1,37 @@
 #!/bin/sh
 
 #SET RUN PARAM HERE
+get_size(){
+	case "$1" in
+		"L1")
+			DATA_SIZE=60
+			;;
+		"L2")
+			DATA_SIZE=170
+			;;
+		"L3")
+	 		DATA_SIZE=950
+			;;
+		"RAM")
+			DATA_SIZE=7000
+			;;
+		*)
+			DATA_SIZE=60
+			echo "L1 has been chosen by default"
+			echo "Usage ./full.sh [L1|L2|L3|RAM] (default is L1)"
+			;;
+	esac
+}
 
 META=70 # number of meta repitions
-WARM=20 # number of warmup iterations
+WARM=200 # number of warmup iterations
 REPT=50 # number of reps in a single run
-DATA_SIZE=2000 # size of the array on which we do our calculations
 
-PLOT_ESTIMATE=true
-
+get_size $1
 plot_tsv() {
 	for i in $(ls $1/*.tsv); do
 		gnuplot -e "set terminal svg ; set output '$i.svg' ; plot '$i' with line"
 	done
-}
-
-plot_metarep() {
-	echo - META ESTIMATE PLOT -
-    echo '' > metamed.tsv
-	for i in $(seq 1 $META) ; do
-		med=$(mktemp)
-
-		echo '' > $med
-
-		for j in $(seq 0 $i) ; do
-			T=$(taskset -c 3 ./O3 3 ${REPT} ${DATA_SIZE})
-			echo $T >> $med
-		done
-		z=$(sort -n $med | sed -ne "$(($i/2+1))p")
-
-		echo $i","$z >> metamed.tsv
-	done
-
-	gnuplot -e "set terminal svg ; set output 'metamed.svg' ; plot 'metamed.tsv' with line"
-
-}
-
-plot_NBRUN() {
-
-	echo - REP ESTIMATE PLOT -
-    echo '' > rep.tsv
-	for i in $(seq 1 50 $REPT) ; do
-		med=$(mktemp)
-
-		echo '' > $med
-
-		for j in $(seq 0 $META) ; do
-			T=$(taskset -c 3 ./O3 3 $i ${DATA_SIZE})
-			echo $T >> $med
-		done
-		z=$(sort -n $med | sed -ne "$(($i/2+1))p")
-
-		echo $i"	"$z >> rep.tsv
-	done
-
-	gnuplot -e "set terminal svg ; set output 'rep.svg' ; plot 'rep.tsv' with line"
-
-
-
 }
 
 mkdir -p warmup
@@ -90,7 +64,7 @@ for i in $TODO ; do
 	echo $T >> $med
 	echo "0	"$T >> "metarep/"$i".tsv"
 	for j in $(seq 1 $META) ; do
-		T=$(taskset -c 3 ./$i 3 ${REPT} ${DATA_SIZE})
+		T=$(taskset -c 3 ./$i ${WARM} ${REPT} ${DATA_SIZE})
 		echo $T >> $med
 		echo $j"	"$T >> "metarep/"$i".tsv"
 
@@ -110,15 +84,6 @@ for i in $TODO ; do
 done
 
 echo  - PLOTING -
-
-if ${PLOT_ESTIMATE} ; then
-	sleep 3
-	plot_metarep
-	sleep 3
-	plot_NBRUN
-fi
-
-
 plot_tsv warmup
 
 #plot_tsv outliers
@@ -132,7 +97,7 @@ for i in $(ls O*) ; do
 done
 echo - LIKWID PASS -
 for i in $(ls O*) ; do
-	likwid-perfctr -C 3 -g CYCLE_ACTIVITY ./$i 3 ${REPT} ${DATA_SIZE} > likwid/$i.txt 
+	likwid-perfctr -C 3 -g CYCLE_ACTIVITY ./$i 3 ${REPT} ${DATA_SIZE} > likwid/$i.txt
 done
 
 echo - DONE -
