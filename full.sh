@@ -24,7 +24,7 @@ get_size(){
 }
 
 META=70 # number of meta repitions
-WARM=200 # number of warmup iterations
+WARM=20 # number of warmup iterations
 REPT=50 # number of reps in a single run
 
 get_size $1
