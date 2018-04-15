@@ -102,6 +102,7 @@
       \item Kernel :  4.9.0-6-amd64
       \item GCC\textsuperscript \textcopyleft   : 6.3.0 20170516 (Debian 6.3.0-18+deb9u1)
       \item ICC : 18.0.1 20171018
+      \item \href{http://www.openmp.org/wp-content/uploads/openmp-4.5.pdf}{openMP: 4.5}
     \end{itemize}
   \subsection{Topologie du système}
     \begin{figure}[ht!]
@@ -153,7 +154,7 @@
     }
   \end{cc}
   \subsubsection{Performance}
-  Nous trouvons en médiane : $13.999611$ cycles par itération.
+  Nous trouvons en médiane : $13.986465$ cycles par itération.
   \begin{figure}[ht!]
     \centering
     \includegraphics[scale=0.45]{../metarep/Obase.png}
@@ -183,15 +184,15 @@
     }
   \end{cc}
   \subsubsection{Performance}
-  Nous trouvons en médiane : $3.968011$ cycles par itération.\\
+  Nous trouvons en médiane : $3.944666$ cycles par itération.\\
   Ce qui veut dire un speed up très important par rapport au code initial de :
   \begin{center}
-      $3.528$
+      $3.546$
   \end{center}
   \begin{figure}[ht!]
     \centering
     \includegraphics[scale=0.45]{../metarep/Ocnv.png}
-    \caption{Résultat du du code initial}
+    \caption{Résultat de l'optimisation par conversion des types}
   \end{figure}
   \subsubsection{Résultats MAQAO}
   D'après \texttt{cqa} il faut que nous changeant l'ordre d'accès à la mémoire, et accèder en lignes
@@ -221,7 +222,7 @@
     }
   \end{cc}
   \subsubsection{Performance}
-  Nous trouvons en médiane : $3.963622$ cycles par itération.\\
+  Nous trouvons en médiane : $3.931523$ cycles par itération.\\
   Ce qui veut dire un speed up très faible par rapport à l'optimisation précédente de :
   \begin{center}
       $1.004$
@@ -229,7 +230,7 @@
   \begin{figure}[ht!]
     \centering
     \includegraphics[scale=0.45]{../metarep/Oijinv.png}
-    \caption{Résultat du du code initial}
+    \caption{Résultat de l'accès en lignes}
   \end{figure}
   \subsubsection{Résultats MAQAO}
   Nous allons essayer de dérouler la boucles manuellement puisque ne nous pouvons pas utiliser
@@ -268,10 +269,10 @@
     }
   \end{cc}
   \subsubsection{Performance}
-  Nous trouvons en médiane : $0.608866$ cycles par itération.\\
+  Nous trouvons en médiane : $0.572415$ cycles par itération.\\
   Ce qui veut dire un speed up très important par rapport à l'optimisation précédente de :
   \begin{center}
-      $6.504$
+      $6.868$
   \end{center}
   \begin{figure}[ht!]
     \centering
@@ -293,10 +294,10 @@
     icc -Wall -fast -opt-prefetch -unroll-aggressive
   \end{verbatim}
   \subsubsection{Performance}
-  Nous trouvons en médiane : $0.000150$ cycles par itération.\\
+  Nous trouvons en médiane : $0.000056$ cycles par itération.\\
   Ce qui veut dire un speed up étonnant par rapport au code optimisé :
   \begin{center}
-      $4059.107$
+      $10221.696$
   \end{center}
   \begin{figure}[ht!]
     \centering
@@ -336,7 +337,7 @@
     }
   \end{cc}
   \subsubsection{Performance}
-  Nous trouvons en médiane : $31.287558$ cycles par itération.\\
+  Nous trouvons en médiane : $31.620731$ cycles par itération.\\
   Ce nombre est étonnant, peut-être que la création des threads + la synchronisation
   des accès aux données partagées soit beaucoup plus coûteuse pour openMP que ça cache le gain obtenu.
   Nous allons exécuter le code avec et sans openMP avec une taille de $1000$ pour éviter ce problème.
@@ -345,8 +346,8 @@
     \begin{tabular}{ | l | c | c | }
       \hline
       Exec    & L1          & RAM         \\ \hline
-      Ofun\_i & $0.000150$  & $0.000001$  \\ \hline
-      Omp     & $31.287558$ & $0.941170$  \\ \hline
+      Ofun\_i & $0.000056$  & $0.000001$  \\ \hline
+      Omp     & $31.620731$ & $0.941170$  \\ \hline
     \end{tabular}
   \end{center}
   Nous remarquons que malgré ce que nous avons essayé, l'optimisation d'openMP ne fait que rendre
@@ -362,43 +363,6 @@
   \end{figure}
   \subsubsection{Résultats MAQAO}
   La sortie de \texttt{cqa} est similaire à la précédente.
-
-
-
-
-
-
-
-
-
-
-  \subsection{temp}
-  \subsubsection{code}
-  \begin{cc}
-    float baseline(int n,float a[n][n])
-    {
-        int i,j;
-        float s=0.0f;
-        for(j=0;j<n;j++)
-            for(i=0;i<n;i++)
-                s += a[j][i];
-        return s;
-    }
-  \end{cc}
-  \subsubsection{Performance}
-  Nous trouvons en médiane : $3.968011$ cycles par itération.\\
-  Ce qui veut dire un speed up très important par rapport au code initial de :
-  \begin{center}
-      $3.528$
-  \end{center}
-  \begin{figure}[ht!]
-    \centering
-    \includegraphics[scale=0.45]{../metarep/Oijinv.png}
-    \caption{Résultat du du code initial}
-  \end{figure}
-  \subsubsection{Résultats MAQAO}
-  \begin{verbatim}
-  \end{verbatim}
 
   %%%%%%%%%%%%INSERT GRAPHIC%%%%%%%%%%%%%%%%%%%%
 
