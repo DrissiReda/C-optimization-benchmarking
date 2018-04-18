@@ -29,10 +29,18 @@ REPT=200 # number of reps in a single run
 
 get_size $1
 plot_tsv() {
+	bi=""
 	for i in $(ls $1/*.tsv); do
-		y=$(echo "$i"| sed 's/\.[^.]*$//' | sed 's/\.[^.]*$//')
-		gnuplot -e "set terminal png ; set output '$y.png' ; plot '$i' with line"
+		y=$(basename $i)
+		y=$(echo "$y"| sed 's/\.[^.]*$//' | sed 's/\.[^.]*$//')
+		gnuplot -e "set terminal png ; set xlabel 'metaiter'; set ylabel 'cycles/rept'; set output '$1/$y.png' ; plot '$i' with line title \"$y\""
+		if [ -z "$bi" ] ; then
+			bi="plot '$i' with line title \"$y\", "
+		else
+			bi="$bi '$i' with line title \"$y\","
+		fi
 	done
+	gnuplot -e "set terminal png ; set xlabel 'metaiter'; set ylabel 'cycles/rept'; set output '$1/glob.png' ; $bi "
 }
 
 mkdir -p warmup
@@ -41,7 +49,7 @@ mkdir -p metarep
 mkdir -p cqa
 mkdir -p likwid
 make clean
-TODO="O3 Ofast" # to be changed depending on the steps
+TODO=$(tail -n +10 Makefile | grep : | cut -d : -f 1) # to be changed depending on the steps
 
 
 echo '' > res.csv

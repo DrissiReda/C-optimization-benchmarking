@@ -43,7 +43,7 @@ Ofun_i:
 	icc $(FLAGS) -Ofast -qopt-prefetch -unroll-aggressive -c -xHost main.c
 	icc $(OBJ) subject10_unroll_i.o -o Ofun_i
 Omp:
-	icc $(FLAGS) -O2 -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c subject10_omp.c
-	icc $(FLAGS) -O2 -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c rdtsc.c
-	icc $(FLAGS) -O2 -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c main.c
+	icc $(FLAGS) -O2 -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c  subject10_omp.c
+	icc $(FLAGS) -O2 -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c  rdtsc.c
+	icc $(FLAGS) -O2 -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c  main.c
 	icc $(OBJ) subject10_omp.o -qopenmp -o Omp
