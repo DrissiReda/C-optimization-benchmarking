@@ -41,7 +41,7 @@ mkdir -p metarep
 mkdir -p cqa
 mkdir -p likwid
 make clean
-TODO="Obase Ocnv Oijinv Ounroll Ofun_i Omp" # to be changed depending on the steps
+TODO="Obase Ocnv Oijinv Ounroll Ofun_i O3 Ofast Omp" # to be changed depending on the steps
 
 
 echo '' > res.csv

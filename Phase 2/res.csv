@@ -1,7 +1,9 @@
 
-Obase 13.990345
-Ocnv 3.945523
-Oijinv 3.931641
-Ounroll 0.572426
-Ofun_i 0.000052
-Omp 31.930811
+Obase 14.018347
+Ocnv 3.945503
+Oijinv 3.960779
+Ounroll 0.572622
+Ofun_i 0.714581
+O3 0.735959
+Ofast 0.713609
+Omp 31.482668
