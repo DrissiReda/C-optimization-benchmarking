@@ -284,16 +284,26 @@
   En exécutant \texttt{cqa} nous trouvons que nous pouvons encore optimiser. Donc nous déroulons
   en 8 étapes, qui est le résultat que nous gardons, parce qu'au delà de 8, nous mettons trop de
   stress sur l'unité d'addition FP.
+  \textt{cqa} qu'il y a un goulet d'étranglement :
+  \begin{verbatim}
+    Bottlenecks
+    -----------
+    Performance is limited by writing data to caches/RAM (the store unit
+    is a bottleneck).
+  \end{verbatim}
+  Ce n'est pas grave, car notre itération même si coûteuse nous permet de diviser le nombre
+  total d'itérations par 8.\\
   Après cela, \texttt{cqa} ne nous donne pas d'autres indices sur l'amélioration du code à part ce
   qui a déjà été effectué, donc nous passons à l'étape suivante qui est d'utiliser les optimisations
   que nous avons trouvé en Phase I.
 
   \subsection{Optimisation de compilation}
+  \subsubsection{\texttt{-fast}}
   Nous allons utiliser les meilleurs optimisations trouvé en Phase I :
   \begin{verbatim}
     icc -Wall -fast -opt-prefetch -unroll-aggressive
   \end{verbatim}
-  \subsubsection{Performance}
+  \paragraph{Performance}
   Nous trouvons en médiane : $0.000056$ cycles par itération.\\
   Ce qui veut dire un speed up étonnant par rapport au code optimisé :
   \begin{center}
@@ -304,23 +314,41 @@
     \includegraphics[scale=0.45]{../metarep/Oijinv.png}
     \caption{Résultat du du code initial}
   \end{figure}
-  \subsubsection{Résultats MAQAO}
+  \paragraph{Résultats MAQAO}
   Nous ne pouvons rien dire, \texttt{cqa} retourne :
   \begin{verbatim}
     Info: No function matches the pattern baseline in the binary ./Ofun_i
   \end{verbatim}
-  Ceci est forcèment dû au temps très cours d'éxecution de notre boucle.
+  Ceci est dû au flag \texttt{-ipo} qui est imprévisible et change forcèment
+  soit l'emplacement de la boucle soit la boucle elle même, c'est pour cela que nous n'allons pas l'utiliser
+  \subsubsection{\texttt{-Ofast}}
+  Le flag \texttt{Ofast} génère un temps de $0.713548$ contre $0.571706$ en \texttt{O2}. Puis Nous remarquons
+  en testons \texttt{O3} (qui donne le même résultat que \texttt{O2}) que le problème vient de \texttt{-ffast-math}
+  couplé à \texttt{O3}. \\
+  En effet \texttt{-O3 -ffast-math} vectorise partiellement notre boucle :
+  \begin{verbatim}
+    Your loop is PARTIALLY VECTORIZED and could benefit from full vectorization.
+    By fully vectorizing your loop, you can lower the cost of an iteration from
+    4.00 to 2.00 cycles (2.00x speedup).
+  \end{verbatim}
+  Mais ce gain ne vaut pas le coup puisqu'il coûte à peu près $20\%$ de
+  la performance obtenu avec le flag \texttt{-O2} qui lui ne vectorise pas :
+  \begin{verbatim}
+    Your loop is NOT VECTORIZED and could benefit from vectorization.
+    By vectorizing your loop, you can lower the cost of an iteration
+    from 4.00 to 0.50 cycles (8.00x speedup).
+  \end{verbatim}
   \subsection{Optimisation OpenMP}
   \subsubsection{code}
   \begin{cc}
     #define N_THRD 8
+    #include <omp.h>
     float baseline(int n,float a[n][n])
     {
         int i,j;
         float s=0.0f,t=0.0f,u=0.0f,v=0.0f,w=0.0f,x=0.0f,y=0.0f,z=0.0f;
-        #pragma omp parallel for num_threads(N_THRD) private (j)
+        #pragma omp parallel for
         for(j=0;j<n;j++)
-          #pragma omp parallel for num_threads(N_THRD) private (i)
           for(i=0;i<n;i=i+8)
           {
                 s += a[j][i];
@@ -355,7 +383,16 @@
   Nous essayons de comprendre la cause de ce problème à l'aide de \texttt{-qopt-report} de icc.
   D'après le rapport, la boucle interne n'a pas pu être parallélisé, donc nous allons réessayer
   en enlevant cette contrainte.\\
-  Effectivement après avoir enlevé le pragma interne, le compilateur réussit à vectoriser la boucle.
+  Effectivement après avoir enlevé le pragma interne, le compilateur réussit à vectoriser la boucle.\\
+  Cependant le gain obtenu, est inférieur au coût.\\
+  Nous allons ensuite essayer plusieurs combinaisons pour trouver ce qui ne va pas.
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  O2 openmp  avec 1 thread: 0.568937 (même que sans openmp)
+  O2 openmp  avec 2 thread: 18.833143 (plus lent que la version basique)
+  O3 openmp  avec 2 threads: 19.111582
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{figure}[ht!]
     \centering
     \includegraphics[scale=0.45]{../metarep/Omp.png}
