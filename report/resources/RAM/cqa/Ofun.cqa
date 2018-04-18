@@ -8,16 +8,16 @@ Section 1.1: Source loop ending at line 7
 
 Composition and unrolling
 -------------------------
-It is composed of the loop 7
+It is composed of the loop 8
 and is not unrolled or unrolled with no peel/tail loop.
 
-Section 1.1.1: Binary loop #7
+Section 1.1.1: Binary loop #8
 =============================
 
 The loop is defined in /root/Desktop/IATIC4/AOA/projet-td/subject10.c:6-7
-In the binary file, the address of the loop is: de8
+In the binary file, the address of the loop is: 16fa
 
-0% of peak computational performance is used (0.07 out of 16.00 FLOP per cycle (GFLOPS @ 1GHz))
+0% of peak computational performance is used (0.10 out of 16.00 FLOP per cycle (GFLOPS @ 1GHz))
 
 Vectorization status
 --------------------
@@ -28,7 +28,7 @@ Only 20% of vector register length is used (average across all SSE/AVX instructi
 Vectorization
 -------------
 Your loop is NOT VECTORIZED and could benefit from vectorization.
-By vectorizing your loop, you can lower the cost of an iteration from 14.00 to 2.25 cycles (6.22x speedup).
+By vectorizing your loop, you can lower the cost of an iteration from 84.00 to 15.30 cycles (5.49x speedup).
 Since your execution units are vector units, only a vectorized loop can use their full power.
 
 Workaround(s):
@@ -46,7 +46,7 @@ Bottlenecks
 Detected a non usual bottleneck.
 
 Workaround(s):
-Found micro-architecture specialization compiler flags: -march=x86-64:
+Found micro-architecture specialization compiler flags: -march=skylake:
  - Check match with analysis target. Ex: for Haswell, you should compile with -march=haswell or, on a Haswell machine, with -march=native
 
 
