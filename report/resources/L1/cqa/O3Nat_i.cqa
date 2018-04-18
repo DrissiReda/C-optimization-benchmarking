@@ -25,13 +25,28 @@ Section 1.1.1: Binary (unrolled and/or vectorized) loop #3
 ==========================================================
 
 The loop is defined in /root/Desktop/IATIC4/AOA/projet-td/subject10.c:6-7
-In the binary file, the address of the loop is: 400ea6
+In the binary file, the address of the loop is: 400ec0
 
-25% of peak computational performance is used (4.00 out of 16.00 FLOP per cycle (GFLOPS @ 1GHz))
+4% of peak computational performance is used (0.67 out of 16.00 FLOP per cycle (GFLOPS @ 1GHz))
 
 Vectorization status
 --------------------
-Your loop is fully vectorized (all SSE/AVX instructions are used in vector version (process two or more data elements in vector registers), using full register length).
+Your loop is vectorized (all SSE/AVX instructions are used in vector version (process two or more data elements in vector registers)), but using 75% register length (average across all SSE/AVX instructions).
+
+
+Vectorization
+-------------
+Your loop is PARTIALLY VECTORIZED and could benefit from full vectorization.
+By fully vectorizing your loop, you can lower the cost of an iteration from 24.00 to 18.95 cycles (1.27x speedup).
+Since your execution units are vector units, only a fully vectorized loop can use their full power.
+
+Workaround(s):
+ - Found micro-architecture specialization compiler flags: 3:
+  * Check match with analysis target. Ex: for Haswell, you should compile with -xCORE-AVX2 or, on a Haswell machine, with -xHost
+ - Use vector aligned instructions:
+  1) align your arrays on 32 bytes boundaries
+  2) inform your compiler that your arrays are vector aligned: use the VECTOR ALIGNED directive.
+ - Use the LOOP COUNT directive
 
 
 Bottlenecks

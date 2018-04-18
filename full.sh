@@ -26,12 +26,20 @@ get_size(){
 META=70 # number of meta repitions
 WARM=20 # number of warmup iterations
 REPT=50 # number of reps in a single run
-
 get_size $1
 plot_tsv() {
+	bi=""
 	for i in $(ls $1/*.tsv); do
-		gnuplot -e "set terminal svg ; set output '$i.svg' ; plot '$i' with line"
+		y=$(basename $i)
+		y=$(echo "$y"| sed 's/\.[^.]*$//' | sed 's/\.[^.]*$//')
+		gnuplot -e "set terminal png ; set xlabel 'metaiter'; set ylabel 'cycles/rept'; set output '$1/$y.png' ; plot '$i' with line title \"$y\""
+		if [ -z "$bi" ] ; then
+			bi="plot '$i' with line title \"$y\", "
+		else
+			bi="$bi '$i' with line title \"$y\","
+		fi
 	done
+	gnuplot -e "set terminal png ; set xlabel 'metaiter'; set ylabel 'cycles/rept'; set output '$1/glob.png' ; $bi "
 }
 
 mkdir -p warmup

@@ -8,20 +8,37 @@ Section 1.1: Source loop ending at line 7
 
 Composition and unrolling
 -------------------------
-It is composed of the loop 6
+It is composed of the loop 7
 and is not unrolled or unrolled with no peel/tail loop.
 
-Section 1.1.1: Binary loop #6
+Section 1.1.1: Binary loop #7
 =============================
 
-The loop is defined in /root/Desktop/IATIC4/AOA/projet-td/subject10.c:2-7
-In the binary file, the address of the loop is: c5e
+The loop is defined in /root/Desktop/IATIC4/AOA/projet-td/subject10.c:6-7
+In the binary file, the address of the loop is: f00
 
-6% of peak computational performance is used (1.00 out of 16.00 FLOP per cycle (GFLOPS @ 1GHz))
+0% of peak computational performance is used (0.07 out of 16.00 FLOP per cycle (GFLOPS @ 1GHz))
 
 Vectorization status
 --------------------
-Your loop is fully vectorized (all SSE/AVX instructions are used in vector version (process two or more data elements in vector registers), using full register length).
+Your loop is not vectorized (all SSE/AVX instructions are used in scalar version (process only one data element in vector registers)).
+Only 20% of vector register length is used (average across all SSE/AVX instructions).
+
+
+Vectorization
+-------------
+Your loop is NOT VECTORIZED and could benefit from vectorization.
+By vectorizing your loop, you can lower the cost of an iteration from 14.00 to 2.33 cycles (6.00x speedup).
+Since your execution units are vector units, only a vectorized loop can use their full power.
+
+Workaround(s):
+ - Try another compiler or update/tune your current one:
+  * if not already done, recompile with O3 to enable the compiler vectorizer. In case of reduction loop, use Ofast instead of O3 or add ffast-math.
+ - Remove inter-iterations dependences from your loop and make it unit-stride:
+  * If your arrays have 2 or more dimensions, check whether elements are accessed contiguously and, otherwise, try to permute loops accordingly:
+C storage order is row-major: for(i) for(j) a[j][i] = b[j][i]; (slow, non stride 1) => for(i) for(j) a[i][j] = b[i][j]; (fast, stride 1)
+  * If your loop streams arrays of structures (AoS), try to use structures of arrays instead (SoA):
+for(i) a[i].x = b[i].x; (slow, non stride 1) => for(i) a.x[i] = b.x[i]; (fast, stride 1)
 
 
 Bottlenecks

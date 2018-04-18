@@ -23,19 +23,19 @@ Section 1.1.1: Binary (unrolled and/or vectorized) loop #2
 ==========================================================
 
 The loop is defined in /root/Desktop/IATIC4/AOA/projet-td/subject10.c:6-7
-In the binary file, the address of the loop is: 400e42
+In the binary file, the address of the loop is: 400e50
 
-12% of peak computational performance is used (2.00 out of 16.00 FLOP per cycle (GFLOPS @ 1GHz))
+3% of peak computational performance is used (0.50 out of 16.00 FLOP per cycle (GFLOPS @ 1GHz))
 
 Vectorization status
 --------------------
-Your loop is vectorized (all SSE/AVX instructions are used in vector version (process two or more data elements in vector registers)), but using only 128 out of 256 bits (SSE/AVX-128 instructions on AVX/AVX2 processors).
+Your loop is vectorized (all SSE/AVX instructions are used in vector version (process two or more data elements in vector registers)), but using 37% register length (average across all SSE/AVX instructions).
 
 
 Vectorization
 -------------
 Your loop is PARTIALLY VECTORIZED and could benefit from full vectorization.
-By fully vectorizing your loop, you can lower the cost of an iteration from 4.00 to 2.00 cycles (2.00x speedup).
+By fully vectorizing your loop, you can lower the cost of an iteration from 16.00 to 5.60 cycles (2.86x speedup).
 Since your execution units are vector units, only a fully vectorized loop can use their full power.
 
 Workaround(s):

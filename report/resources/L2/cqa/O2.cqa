@@ -8,27 +8,27 @@ Section 1.1: Source loop ending at line 7
 
 Composition and unrolling
 -------------------------
-It is composed of the loop 5
+It is composed of the loop 7
 and is not unrolled or unrolled with no peel/tail loop.
 
-Section 1.1.1: Binary loop #5
+Section 1.1.1: Binary loop #7
 =============================
 
 The loop is defined in /root/Desktop/IATIC4/AOA/projet-td/subject10.c:6-7
-In the binary file, the address of the loop is: bc0
+In the binary file, the address of the loop is: ca8
 
-1% of peak computational performance is used (0.25 out of 16.00 FLOP per cycle (GFLOPS @ 1GHz))
+0% of peak computational performance is used (0.07 out of 16.00 FLOP per cycle (GFLOPS @ 1GHz))
 
 Vectorization status
 --------------------
 Your loop is not vectorized (all SSE/AVX instructions are used in scalar version (process only one data element in vector registers)).
-4 data elements could be processed at once in vector registers.
+Only 20% of vector register length is used (average across all SSE/AVX instructions).
 
 
 Vectorization
 -------------
 Your loop is NOT VECTORIZED and could benefit from vectorization.
-By vectorizing your loop, you can lower the cost of an iteration from 4.00 to 1.00 cycles (4.00x speedup).
+By vectorizing your loop, you can lower the cost of an iteration from 14.00 to 2.25 cycles (6.22x speedup).
 Since your execution units are vector units, only a vectorized loop can use their full power.
 
 Workaround(s):
