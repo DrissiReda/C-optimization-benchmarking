@@ -23,27 +23,27 @@ Oijinv:
 	$(CC) $(FLAGS) -O2 -c main.c
 	$(CC) $(OBJ) subject10_ijinv.o -o Oijinv
 Ounroll:
-	$(CC) $(FLAGS) -O3 -fopenmp -c subject10_omp.c
-	$(CC) $(FLAGS) -O3 -fopenmp -c rdtsc.c
-	$(CC) $(FLAGS) -O3 -fopenmp -c main.c
-	$(CC) $(OBJ) subject10_omp.o -fopenmp -o Ounroll
+	$(CC) $(FLAGS) -O2 -c subject10_unroll.c
+	$(CC) $(FLAGS) -O2 -c rdtsc.c
+	$(CC) $(FLAGS) -O2 -c main.c
+	$(CC) $(OBJ) subject10_unroll.o  -o Ounroll
 O3:
-	$(CC) $(FLAGS) -O3 -c subject10_unroll.c
-	$(CC) $(FLAGS) -O3 -c main.c
-	$(CC) $(FLAGS) -O3 -c rdtsc.c
+	$(CC) $(FLAGS) -O3 -march=skylake -c subject10_unroll.c
+	$(CC) $(FLAGS) -O3 -march=skylake -c main.c
+	$(CC) $(FLAGS) -O3 -march=skylake -c rdtsc.c
 	$(CC) $(OBJ) subject10_unroll.o -o O3
 Ofast:
-	$(CC) $(FLAGS) -O3 -ffast-math -c subject10_unroll.c
-	$(CC) $(FLAGS) -O3 -ffast-math -c main.c
-	$(CC) $(FLAGS) -O3 -ffast-math -c rdtsc.c
+	$(CC) $(FLAGS) -Ofast -c subject10_unroll.c
+	$(CC) $(FLAGS) -Ofast -c main.c
+	$(CC) $(FLAGS) -Ofast -c rdtsc.c
 	$(CC) $(OBJ) subject10_unroll.o -o Ofast
 Ofun_i:
-	icc $(FLAGS) -O2 -qopt-prefetch -unroll-aggressive -c -xHost subject10_unroll_i.c
-	icc $(FLAGS) -O2 -qopt-prefetch -unroll-aggressive -c -xHost rdtsc.c
-	icc $(FLAGS) -O2 -qopt-prefetch -unroll-aggressive -c -xHost main.c
+	icc $(FLAGS) -Ofast -qopt-prefetch -unroll-aggressive -c -xHost subject10_unroll_i.c
+	icc $(FLAGS) -Ofast -qopt-prefetch -unroll-aggressive -c -xHost rdtsc.c
+	icc $(FLAGS) -Ofast -qopt-prefetch -unroll-aggressive -c -xHost main.c
 	icc $(OBJ) subject10_unroll_i.o -o Ofun_i
 Omp:
-	icc $(FLAGS) -Ofast -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c -xHost subject10_omp.c
-	icc $(FLAGS) -Ofast -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c -xHost rdtsc.c
-	icc $(FLAGS) -Ofast -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c -xHost main.c
+	icc $(FLAGS) -O2 -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c subject10_omp.c
+	icc $(FLAGS) -O2 -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c rdtsc.c
+	icc $(FLAGS) -O2 -qopt-report -qopenmp -qopt-prefetch -unroll-aggressive -c main.c
 	icc $(OBJ) subject10_omp.o -qopenmp -o Omp

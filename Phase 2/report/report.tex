@@ -338,6 +338,24 @@
     By vectorizing your loop, you can lower the cost of an iteration
     from 4.00 to 0.50 cycles (8.00x speedup).
   \end{verbatim}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \subsubsection{\texttt{icc}}
+  Nous trouvons avec \texttt{icc -O3} un temps de $0.630128$ donc c'est une
+  perte par rapport à \texttt{gcc -O3} qui trouve $0.569972$.\\
+  Nous trouvons avec \texttt{icc -O2} un temps de $0.513700$ donc c'est une
+  perte par rapport à \texttt{gcc -O2} qui trouve $0.572750$. Soit un gain
+  de $1.115$\\
+  Donc la meilleure config sera de \texttt{icc -O2}
+  Par contre en essayant \texttt{-march=skylake} nous trouvons l'inverse, soit
+  un résultat similaire à l'addition de \texttt{-ffast-math}.
+  \texttt{gcc -O2 -march=skylake} donne $0.582897$
+  \texttt{icc -O2 -xHost} donne $0.770447$
+  \texttt{gcc -O3 -march=skylake} donne $0.696146$
+  \texttt{icc -O3 -xHost} donne $0.711994$
+  Nous resterons alors sur \texttt{icc -O2}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \subsection{Optimisation OpenMP}
   \subsubsection{code}
   \begin{cc}

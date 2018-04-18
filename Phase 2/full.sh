@@ -41,7 +41,7 @@ mkdir -p metarep
 mkdir -p cqa
 mkdir -p likwid
 make clean
-TODO="Ounroll" # to be changed depending on the steps
+TODO="O3 Ofast" # to be changed depending on the steps
 
 
 echo '' > res.csv
